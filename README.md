@@ -6,8 +6,6 @@
   </a>
 </p>
 
-**Founder of 洛浠网络科技有限公司 | CS Undergraduate**
-
 I am a developer focused on bridging low-level hardware control with AI inference and interactive web interfaces. From fabricating custom embedded circuits to deploying vision-language models, I enjoy building end-to-end systems.
 
 ---
