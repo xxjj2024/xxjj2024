@@ -243,49 +243,60 @@ def render_telemetry(data):
 def render_toolchain(data):
     h = 240
     
-    # 绘制背景的装饰性拓扑连线
-    lines = f"""
-    <path d="M 120,120 L 300,120 L 400,60 L 700,60 L 800,180 L 1050,180" fill="none" stroke="{COLORS['stroke']}" stroke-width="2"/>
-    <path d="M 300,120 L 400,180 L 700,180" fill="none" stroke="{COLORS['stroke']}" stroke-width="2"/>
+    # 工业图纸风格底纹 (十字对齐线 + 极小字号工程批号)
+    bg = f"""
+    <path d="M 24,20 L 34,20 M 24,20 L 24,30 M {WIDTH-24},20 L {WIDTH-34},20 M {WIDTH-24},20 L {WIDTH-24},30" fill="none" stroke="{COLORS['dim']}" stroke-width="1"/>
+    <text x="32" y="32" fill="{COLORS['dim']}" font-size="10" font-weight="bold" letter-spacing="2">SYS.ARCH // HARDWARE &amp; FIRMWARE TOPOLOGY</text>
+    <text x="{WIDTH-32}" y="32" fill="{COLORS['dim']}" font-size="8" text-anchor="end">REV. 2.6.1_PROD</text>
+    <line x1="24" y1="44" x2="{WIDTH-24}" y2="44" stroke="{COLORS['stroke']}" stroke-width="1" stroke-dasharray="4 2"/>
     """
+    
+    # 渲染右上角的装饰性条形码
+    barcode = ""
+    for i in [0, 4, 6, 12, 16, 20, 24, 30, 32, 38]:
+        barcode += f'<line x1="{WIDTH - 120 + i}" y1="18" x2="{WIDTH - 120 + i}" y2="34" stroke="{COLORS["dim"]}" stroke-width="{1 if i%3==0 else 2}"/>'
 
-    # 六边形生成器
-    def make_hex(cx, cy, label, color):
-        # 计算六边形顶点 (r=45)
-        points = "0,-45 39,-22.5 39,22.5 0,45 -39,22.5 -39,-22.5"
+    # 非对称工业内存块生成器
+    def make_block(x, y, w, h, label, sub_labels, color, hex_addr):
+        subs = ""
+        for idx, sub in enumerate(sub_labels):
+            subs += f'<text x="{x+10}" y="{y+42+(idx*16)}" fill="{COLORS["dim"]}" font-size="11">- {sub}</text>'
+            
         return f"""
-        <g transform="translate({cx}, {cy})">
-            <!-- 外框脉冲动画 -->
-            <polygon points="{points}" fill="{COLORS['panel']}" stroke="{color}" stroke-width="1.5">
-                <animate attributeName="stroke-opacity" values="0.3;1;0.3" dur="{3 + (cx%3)}s" repeatCount="indefinite"/>
-            </polygon>
-            <!-- 核心发光点 -->
-            <circle cx="0" cy="-30" r="2" fill="{color}" />
-            <text x="0" y="5" fill="#FFFFFF" font-size="12" font-weight="bold" text-anchor="middle">{label}</text>
+        <g>
+            <!-- 实体方块与背景 -->
+            <rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{COLORS['panel']}" stroke="{color}" stroke-width="1"/>
+            <rect x="{x}" y="{y}" width="{w}" height="22" fill="{color}" fill-opacity="0.15"/>
+            <!-- 标题与十六进制地址 -->
+            <text x="{x+10}" y="{y+15}" fill="{color}" font-size="12" font-weight="bold">{label}</text>
+            <text x="{x+w-10}" y="{y+15}" fill="{color}" font-size="10" font-family="'JetBrains Mono', Consolas" text-anchor="end">{hex_addr}</text>
+            <!-- 接口焊点节点 -->
+            <circle cx="{x+w}" cy="{y+h/2}" r="3" fill="{COLORS['bg']}" stroke="{color}" stroke-width="1.5"/>
+            {subs}
+            <!-- 底部高亮装饰线 -->
+            <line x1="{x+10}" y1="{y+h-10}" x2="{x+w-10}" y2="{y+h-10}" stroke="{color}" stroke-opacity="0.4" stroke-width="2"/>
         </g>
         """
 
-    hexes = []
-    # LANG (Cyan)
-    hexes.append(make_hex(150, 120, "C/C++", COLORS['cyan']))
-    hexes.append(make_hex(240, 120, "Python", COLORS['cyan']))
-    # MCU/RTOS (Yellow)
-    hexes.append(make_hex(330, 68, "STM32", COLORS['yellow']))
-    hexes.append(make_hex(420, 68, "ESP32", COLORS['yellow']))
-    hexes.append(make_hex(510, 68, "FreeRTOS", COLORS['yellow']))
-    # AI/SYS (Magenta)
-    hexes.append(make_hex(330, 172, "ROS2", COLORS['magenta']))
-    hexes.append(make_hex(420, 172, "OpenCV", COLORS['magenta']))
-    hexes.append(make_hex(510, 172, "YOLOv8", COLORS['magenta']))
-    hexes.append(make_hex(600, 172, "Qwen-VL", COLORS['magenta']))
-    # WEB/OTHER (Green)
-    hexes.append(make_hex(780, 120, "Vue3", COLORS['green']))
-    hexes.append(make_hex(870, 120, "Django", COLORS['green']))
-    hexes.append(make_hex(960, 120, "Next.js", COLORS['green']))
+    # 绘制数据总线走线 (直角拐角，模拟 PCB 走线)
+    bus_lines = f"""
+    <path d="M 280,125 L 320,125" fill="none" stroke="{COLORS['cyan']}" stroke-width="2" stroke-dasharray="4 2"/>
+    <path d="M 520,95 L 560,95" fill="none" stroke="{COLORS['yellow']}" stroke-width="2"/>
+    <path d="M 520,175 L 540,175 L 540,155 L 560,155" fill="none" stroke="{COLORS['yellow']}" stroke-width="2"/>
+    <path d="M 760,140 L 800,140" fill="none" stroke="{COLORS['magenta']}" stroke-width="2"/>
+    <path d="M 1000,140 L 1040,140" fill="none" stroke="{COLORS['green']}" stroke-width="2"/>
+    """
 
-    title = f"<text x=\"24\" y=\"30\" fill=\"{COLORS['dim']}\" font-size=\"12\" font-weight=\"bold\" letter-spacing=\"2\">&gt;_SYS.TOPOLOGY / TOOLCHAIN</text>"
-    
-    return svg_base(h, title + lines + "".join(hexes))
+    # 基于真实开发栈构建拓扑矩阵，避免假大空的名词
+    blocks = [
+        make_block(80, 70, 200, 110, "MCU_CORE", ["STM32F103C8T6", "ESP32-S3", "FreeRTOS / ESP-IDF"], COLORS['cyan'], "0x0800"),
+        make_block(320, 60, 200, 70, "PERIPHERALS", ["I2C / SPI / UART", "RS485 / PWM"], COLORS['yellow'], "0x4000"),
+        make_block(320, 140, 200, 70, "MOTION_CTRL", ["ROS2 Humble", "Nav2 / SLAM"], COLORS['yellow'], "0x4002"),
+        make_block(560, 70, 200, 140, "AI_VISION", ["YOLOv8 / YOLOv11", "Qwen2.5-VL / Ollama", "OpenCV / ONNX", "Intel RealSense D435"], COLORS['magenta'], "0x6000"),
+        make_block(800, 70, 200, 140, "WEB_PORTAL", ["Vue 3 + Element Plus", "Django REST Framework", "Next.js / Tailwind", "Three.js / WebGL"], COLORS['green'], "0x8000")
+    ]
+
+    return svg_base(h, bg + barcode + bus_lines + "".join(blocks))
 
 # --- 区块 05: BUILDS ---
 def render_builds(data):
