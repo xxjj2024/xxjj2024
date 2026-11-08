@@ -1,0 +1,38 @@
+{
+  "callsign": "JasmineX",
+  "username": "xxjj2024",
+  "version": "v2.6",
+  "motto": "make it work, make it right, make it fast.",
+  "roles": ["embedded firmware", "motion control"],
+  "focus": "STM32 固件 · 闭环步进 · 舵机云台 · ROS2 底盘",
+  "dirs": ["laser-cannon/", "stepper-57/", "library-sys/", "video-lab/"],
+  "toolchain": [
+    {"group": "LANG", "items": ["C/C++", "Python"]},
+    {"group": "MCU/RTOS", "items": ["STM32", "ESP32", "FreeRTOS"]},
+    {"group": "PROTOCOL", "items": ["UART", "SPI", "I2C", "CAN", "RTSP"]},
+    {"group": "SYS/AI", "items": ["ROS2 Humble", "OpenCV", "YOLOv8", "Qwen-VL"]}
+  ],
+  "builds": [
+    {
+      "id": "01",
+      "lang": "C++ / ROS2",
+      "codename": "LASER-CANNON",
+      "desc": ["基于 STM32 的双舵机蓝牙激光炮台控制系统", "采用 180° 舵机及 360° 连续舵机构建双自由度"],
+      "repo": "STM32-Practice-Project---Laser-Cannon-STM32-"
+    },
+    {
+      "id": "02",
+      "lang": "C / STM32",
+      "codename": "STEPPER-57",
+      "desc": ["STM32F103C8T6 闭环 57 步电机的从 0 到 1", "包含位置环与速度环 PID 调参实现"],
+      "repo": "Getting-Started-with-Closed-loop-57-step-Stepper-Motor-from-0-to-1"
+    },
+    {
+      "id": "03",
+      "lang": "Python",
+      "codename": "VIBE-AWARDS",
+      "desc": ["基于视觉大模型的视频解析与二次创作", "集成自动化剪辑与弹幕渲染模块"],
+      "repo": "Vibe-Knowledge-Awards-Video-Production"
+    }
+  ]
+}
