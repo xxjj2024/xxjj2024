@@ -5,19 +5,25 @@
             <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
+        <filter id="glow-magenta" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
         <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
             <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1"/>
         </pattern>
         <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.06" stroke-width="1"/>
+            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.04" stroke-width="1"/>
         </pattern>
     </defs>
     
     <rect width="1200" height="344" fill="#04060D" />
+    <!-- 巨型工业背景水印 -->
+    <text x="600.0" y="272.0" fill="#FFFFFF" font-size="275.2" font-weight="900" font-family="Arial, Helvetica, sans-serif" opacity="0.02" text-anchor="middle" letter-spacing="-10">03</text>
     <rect width="1200" height="344" fill="url(#grid)" />
     
     <!-- 左侧终端面板 -->
-    <rect x="24" y="24" width="680" height="296" rx="14" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
+    <rect x="24" y="24" width="680" height="296" rx="12" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
     <circle cx="44" cy="44" r="5" fill="#FF2FA8"/>
     <circle cx="60" cy="44" r="5" fill="#FFC247"/>
     <circle cx="76" cy="44" r="5" fill="#A8FF5E"/>
@@ -39,55 +45,71 @@
     </g>
 
     <!-- 右侧 Boot Log 面板 (逐渐亮起) -->
-    <rect x="728" y="24" width="448" height="296" rx="14" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
-    <g font-size="13" transform="translate(748, 64)" fill="#6F84A6">
+    <rect x="728" y="24" width="448" height="296" rx="12" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
+    <g font-size="14" transform="translate(748, 64)" fill="#6F84A6">
     
         <text y="0" fill="#6F84A6" opacity="0">
-            [ 0.000] jasmine-os 2.6 boot
+            [ 0.000] system boot: JASMINE//OS v2.6.1_PROD
             <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="0.0s" fill="freeze" />
         </text>
         
-        <text y="26" fill="#6F84A6" opacity="0">
-            [ 0.041] cpu: cortex-m4 @ 168MHz
+        <text y="24" fill="#A8FF5E" opacity="0">
+            [ 0.041] mcu_core: cortex-m4 @ 168MHz ... [OK]
             <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="0.13s" fill="freeze" />
         </text>
         
-        <text y="52" fill="#6F84A6" opacity="0">
-            [ 0.082] can0: 500 kbit/s online
+        <text y="48" fill="#A8FF5E" opacity="0">
+            [ 0.082] bus_init: i2c1, spi2, uart4    ... [OK]
             <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="0.26s" fill="freeze" />
         </text>
         
-        <text y="78" fill="#6F84A6" opacity="0">
-            [ 0.123] i2c: oled 0x3c ack
+        <text y="72" fill="#A8FF5E" opacity="0">
+            [ 0.123] motion_sys: ros2_humble node  ... [ONLINE]
             <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="0.39s" fill="freeze" />
         </text>
         
-        <text y="104" fill="#6F84A6" opacity="0">
-            [ 0.164] pwm: tim3 ch1..ch4 armed
+        <text y="96" fill="#FFC247" opacity="0">
+            [ 0.164] vision_ai: qwen2.5-vl loaded   ... [STANDBY]
             <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="0.52s" fill="freeze" />
         </text>
         
-        <text y="130" fill="#6F84A6" opacity="0">
-            [ 0.205] fs: mount /lab ok
+        <text y="120" fill="#A8FF5E" opacity="0">
+            [ 0.205] fs_mount: /dev/sda1 -> /lab   ... [OK]
             <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="0.65s" fill="freeze" />
         </text>
         
-        <text y="156" fill="#6F84A6" opacity="0">
-            [ 0.246] net: ros2 agent up
+        <text y="144" fill="#6F84A6" opacity="0">
+            [ 0.246] ---------------------------------------
             <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="0.78s" fill="freeze" />
         </text>
         
-        <text y="182" fill="#6F84A6" opacity="0">
-            [ 0.287] theme: neon loaded
+        <text y="168" fill="#22E1FF" opacity="0">
+            [ 0.287] proc_spawn: haloflux_agent_monitor.js
             <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="0.91s" fill="freeze" />
         </text>
         
-        <text y="208" fill="#A8FF5E" opacity="0">
-            [ 0.328] ready for input_
+        <text y="192" fill="#22E1FF" opacity="0">
+            [ 0.328] ws_stream: connected to model [glm-5.3]
             <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="1.04s" fill="freeze" />
+        </text>
+        
+        <text y="216" fill="#A8FF5E" opacity="0">
+            [ 0.369] dom_canvas: hybrid render sync ... [ACTIVE]
+            <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="1.17s" fill="freeze" />
+        </text>
+        
+        <text y="240" fill="#A8FF5E" opacity="0">
+            [ 0.410] ready for command input_
+            <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="1.3s" fill="freeze" />
         </text>
         </g>
     <rect width="1200" height="344" fill="url(#scanlines)" pointer-events="none" />
+    
     <!-- HUD Corners -->
     <path d="M 14,0 L 0,0 L 0,14 M 1186,0 L 1200,0 L 1200,14 M 1186,344 L 1200,344 L 1200,330 M 14,344 L 0,344 L 0,330" fill="none" stroke="#1B2740" stroke-width="2" />
+    <!-- Calibration Crosshairs -->
+    <path d="M 40,24 L 48,24 M 44,20 L 44,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 1152,24 L 1160,24 M 1156,20 L 1156,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 40,332 L 48,332 M 44,328 L 44,336" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 1152,332 L 1160,332 M 1156,328 L 1156,336" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
     </svg>

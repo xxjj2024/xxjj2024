@@ -1,7 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="100%" height="100%" style="background-color:#04060D; font-family: 'JetBrains Mono', Consolas, 'Microsoft YaHei', sans-serif;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 240" width="100%" height="100%" style="background-color:#04060D; font-family: 'JetBrains Mono', Consolas, 'Microsoft YaHei', sans-serif;">
     
     <defs>
         <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-magenta" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
@@ -9,13 +13,15 @@
             <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1"/>
         </pattern>
         <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.06" stroke-width="1"/>
+            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.04" stroke-width="1"/>
         </pattern>
     </defs>
     
-    <rect width="1200" height="420" fill="#04060D" />
-    <rect width="1200" height="420" fill="url(#grid)" />
-    <text x="24" y="30" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="2">ACCESSING_RECORDS // BUILDS</text>
+    <rect width="1200" height="240" fill="#04060D" />
+    <!-- 巨型工业背景水印 -->
+    <text x="600.0" y="220.0" fill="#FFFFFF" font-size="192.0" font-weight="900" font-family="Arial, Helvetica, sans-serif" opacity="0.02" text-anchor="middle" letter-spacing="-10">05</text>
+    <rect width="1200" height="240" fill="url(#grid)" />
+    <text x="64" y="30" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="2">ACCESSING_RECORDS // BUILDS</text>
         <g transform="translate(20.0, 70)">
             <!-- 卡片底板 -->
             <rect x="0" y="0" width="360" height="150" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
@@ -30,8 +36,8 @@
             <rect x="0" y="0" width="360" height="4" fill="#8B5CFF"/>
             
             <!-- 编号与语言标签 -->
-            <text x="16" y="30" fill="#FFC247" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="900">[01]</text>
-            <text x="60" y="28" fill="#6F84A6" font-size="10" font-weight="bold">C++ / ROS2</text>
+            <text x="16" y="30" fill="#FFC247" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="700">[01]</text>
+            <text x="60" y="28" fill="#6F84A6" font-size="12" font-weight="bold">C++ / ROS2</text>
             
             <!-- 呼吸状态点 -->
             <circle cx="340" cy="24" r="4" fill="#A8FF5E">
@@ -39,11 +45,11 @@
             </circle>
 
             <!-- 项目代号 -->
-            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="900" letter-spacing="1">LASER-CANNON</text>
+            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="700" letter-spacing="1">LASER-CANNON</text>
             
             <!-- 中文描述 (分两行) -->
-            <text x="16" y="95" fill="#22E1FF" font-size="13">基于 STM32 的双舵机蓝牙激光炮台控制系统</text>
-            <text x="16" y="115" fill="#22E1FF" font-size="13">采用 180° 舵机及 360° 连续舵机构建双自由度</text>
+            <text x="16" y="95" fill="#22E1FF" font-size="14">基于 STM32 的双舵机蓝牙激光炮台控制系统</text>
+            <text x="16" y="115" fill="#22E1FF" font-size="14">采用 180° 舵机及 360° 连续舵机构建双自由度</text>
             
             <!-- 底部装饰线索 -->
             <line x1="16" y1="135" x2="344" y2="135" stroke="#1B2740" stroke-width="1" stroke-dasharray="2 2"/>
@@ -63,8 +69,8 @@
             <rect x="0" y="0" width="360" height="4" fill="#8B5CFF"/>
             
             <!-- 编号与语言标签 -->
-            <text x="16" y="30" fill="#FFC247" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="900">[02]</text>
-            <text x="60" y="28" fill="#6F84A6" font-size="10" font-weight="bold">C / STM32</text>
+            <text x="16" y="30" fill="#FFC247" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="700">[02]</text>
+            <text x="60" y="28" fill="#6F84A6" font-size="12" font-weight="bold">C / STM32</text>
             
             <!-- 呼吸状态点 -->
             <circle cx="340" cy="24" r="4" fill="#A8FF5E">
@@ -72,11 +78,11 @@
             </circle>
 
             <!-- 项目代号 -->
-            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="900" letter-spacing="1">STEPPER-57</text>
+            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="700" letter-spacing="1">STEPPER-57</text>
             
             <!-- 中文描述 (分两行) -->
-            <text x="16" y="95" fill="#22E1FF" font-size="13">STM32F103C8T6 闭环 57 步电机的从 0 到 1</text>
-            <text x="16" y="115" fill="#22E1FF" font-size="13">包含位置环与速度环 PID 调参实现</text>
+            <text x="16" y="95" fill="#22E1FF" font-size="14">STM32F103C8T6 闭环 57 步电机的从 0 到 1</text>
+            <text x="16" y="115" fill="#22E1FF" font-size="14">包含位置环与速度环 PID 调参实现</text>
             
             <!-- 底部装饰线索 -->
             <line x1="16" y1="135" x2="344" y2="135" stroke="#1B2740" stroke-width="1" stroke-dasharray="2 2"/>
@@ -96,8 +102,8 @@
             <rect x="0" y="0" width="360" height="4" fill="#8B5CFF"/>
             
             <!-- 编号与语言标签 -->
-            <text x="16" y="30" fill="#FFC247" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="900">[03]</text>
-            <text x="60" y="28" fill="#6F84A6" font-size="10" font-weight="bold">PYTHON</text>
+            <text x="16" y="30" fill="#FFC247" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="700">[03]</text>
+            <text x="60" y="28" fill="#6F84A6" font-size="12" font-weight="bold">PYTHON</text>
             
             <!-- 呼吸状态点 -->
             <circle cx="340" cy="24" r="4" fill="#A8FF5E">
@@ -105,17 +111,23 @@
             </circle>
 
             <!-- 项目代号 -->
-            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="900" letter-spacing="1">VIBE-AWARDS</text>
+            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="700" letter-spacing="1">VIBE-AWARDS</text>
             
             <!-- 中文描述 (分两行) -->
-            <text x="16" y="95" fill="#22E1FF" font-size="13">基于视觉大模型的视频解析与二次创作</text>
-            <text x="16" y="115" fill="#22E1FF" font-size="13">集成自动化剪辑与弹幕渲染模块</text>
+            <text x="16" y="95" fill="#22E1FF" font-size="14">基于视觉大模型的视频解析与二次创作</text>
+            <text x="16" y="115" fill="#22E1FF" font-size="14">集成自动化剪辑与弹幕渲染模块</text>
             
             <!-- 底部装饰线索 -->
             <line x1="16" y1="135" x2="344" y2="135" stroke="#1B2740" stroke-width="1" stroke-dasharray="2 2"/>
         </g>
         
-    <rect width="1200" height="420" fill="url(#scanlines)" pointer-events="none" />
+    <rect width="1200" height="240" fill="url(#scanlines)" pointer-events="none" />
+    
     <!-- HUD Corners -->
-    <path d="M 14,0 L 0,0 L 0,14 M 1186,0 L 1200,0 L 1200,14 M 1186,420 L 1200,420 L 1200,406 M 14,420 L 0,420 L 0,406" fill="none" stroke="#1B2740" stroke-width="2" />
+    <path d="M 14,0 L 0,0 L 0,14 M 1186,0 L 1200,0 L 1200,14 M 1186,240 L 1200,240 L 1200,226 M 14,240 L 0,240 L 0,226" fill="none" stroke="#1B2740" stroke-width="2" />
+    <!-- Calibration Crosshairs -->
+    <path d="M 40,24 L 48,24 M 44,20 L 44,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 1152,24 L 1160,24 M 1156,20 L 1156,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 40,228 L 48,228 M 44,224 L 44,232" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 1152,228 L 1160,228 M 1156,224 L 1156,232" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
     </svg>

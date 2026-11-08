@@ -5,20 +5,26 @@
             <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
+        <filter id="glow-magenta" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
         <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
             <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1"/>
         </pattern>
         <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.06" stroke-width="1"/>
+            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.04" stroke-width="1"/>
         </pattern>
     </defs>
     
     <rect width="1200" height="240" fill="#04060D" />
+    <!-- 巨型工业背景水印 -->
+    <text x="600.0" y="220.0" fill="#FFFFFF" font-size="192.0" font-weight="900" font-family="Arial, Helvetica, sans-serif" opacity="0.02" text-anchor="middle" letter-spacing="-10">04</text>
     <rect width="1200" height="240" fill="url(#grid)" />
     
     <path d="M 24,20 L 34,20 M 24,20 L 24,30 M 1176,20 L 1166,20 M 1176,20 L 1176,30" fill="none" stroke="#6F84A6" stroke-width="1"/>
-    <text x="32" y="32" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="2">SYS.ARCH // HARDWARE &amp; FIRMWARE TOPOLOGY</text>
-    <text x="1168" y="32" fill="#6F84A6" font-size="8" text-anchor="end">REV. 2.6.1_PROD</text>
+    <text x="64" y="32" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="2">SYS.ARCH // HARDWARE &amp; FIRMWARE TOPOLOGY</text>
+    <text x="1168" y="40" fill="#6F84A6" font-size="8" text-anchor="end">REV. 2.6.1_PROD</text>
     <line x1="24" y1="44" x2="1176" y2="44" stroke="#1B2740" stroke-width="1" stroke-dasharray="4 2"/>
     <line x1="1080" y1="18" x2="1080" y2="34" stroke="#6F84A6" stroke-width="1"/><line x1="1084" y1="18" x2="1084" y2="34" stroke="#6F84A6" stroke-width="2"/><line x1="1086" y1="18" x2="1086" y2="34" stroke="#6F84A6" stroke-width="1"/><line x1="1092" y1="18" x2="1092" y2="34" stroke="#6F84A6" stroke-width="1"/><line x1="1096" y1="18" x2="1096" y2="34" stroke="#6F84A6" stroke-width="2"/><line x1="1100" y1="18" x2="1100" y2="34" stroke="#6F84A6" stroke-width="2"/><line x1="1104" y1="18" x2="1104" y2="34" stroke="#6F84A6" stroke-width="1"/><line x1="1110" y1="18" x2="1110" y2="34" stroke="#6F84A6" stroke-width="1"/><line x1="1112" y1="18" x2="1112" y2="34" stroke="#6F84A6" stroke-width="2"/><line x1="1118" y1="18" x2="1118" y2="34" stroke="#6F84A6" stroke-width="2"/>
     <path d="M 280,125 L 320,125" fill="none" stroke="#22E1FF" stroke-width="2" stroke-dasharray="4 2"/>
@@ -33,10 +39,10 @@
             <rect x="80" y="70" width="200" height="22" fill="#22E1FF" fill-opacity="0.15"/>
             <!-- 标题与十六进制地址 -->
             <text x="90" y="85" fill="#22E1FF" font-size="12" font-weight="bold">MCU_CORE</text>
-            <text x="270" y="85" fill="#22E1FF" font-size="10" font-family="'JetBrains Mono', Consolas" text-anchor="end">0x0800</text>
+            <text x="270" y="85" fill="#22E1FF" font-size="12" font-family="'JetBrains Mono', Consolas" text-anchor="end">0x0800</text>
             <!-- 接口焊点节点 -->
             <circle cx="280" cy="125.0" r="3" fill="#04060D" stroke="#22E1FF" stroke-width="1.5"/>
-            <text x="90" y="112" fill="#6F84A6" font-size="11">- STM32F103C8T6</text><text x="90" y="128" fill="#6F84A6" font-size="11">- ESP32-S3</text><text x="90" y="144" fill="#6F84A6" font-size="11">- FreeRTOS / ESP-IDF</text>
+            <text x="90" y="112" fill="#6F84A6" font-size="12">- STM32F103C8T6</text><text x="90" y="128" fill="#6F84A6" font-size="12">- ESP32-S3</text><text x="90" y="144" fill="#6F84A6" font-size="12">- FreeRTOS / ESP-IDF</text>
             <!-- 底部高亮装饰线 -->
             <line x1="90" y1="170" x2="270" y2="170" stroke="#22E1FF" stroke-opacity="0.4" stroke-width="2"/>
         </g>
@@ -47,10 +53,10 @@
             <rect x="320" y="60" width="200" height="22" fill="#FFC247" fill-opacity="0.15"/>
             <!-- 标题与十六进制地址 -->
             <text x="330" y="75" fill="#FFC247" font-size="12" font-weight="bold">PERIPHERALS</text>
-            <text x="510" y="75" fill="#FFC247" font-size="10" font-family="'JetBrains Mono', Consolas" text-anchor="end">0x4000</text>
+            <text x="510" y="75" fill="#FFC247" font-size="12" font-family="'JetBrains Mono', Consolas" text-anchor="end">0x4000</text>
             <!-- 接口焊点节点 -->
             <circle cx="520" cy="95.0" r="3" fill="#04060D" stroke="#FFC247" stroke-width="1.5"/>
-            <text x="330" y="102" fill="#6F84A6" font-size="11">- I2C / SPI / UART</text><text x="330" y="118" fill="#6F84A6" font-size="11">- RS485 / PWM</text>
+            <text x="330" y="102" fill="#6F84A6" font-size="12">- I2C / SPI / UART</text><text x="330" y="118" fill="#6F84A6" font-size="12">- RS485 / PWM</text>
             <!-- 底部高亮装饰线 -->
             <line x1="330" y1="120" x2="510" y2="120" stroke="#FFC247" stroke-opacity="0.4" stroke-width="2"/>
         </g>
@@ -61,10 +67,10 @@
             <rect x="320" y="140" width="200" height="22" fill="#FFC247" fill-opacity="0.15"/>
             <!-- 标题与十六进制地址 -->
             <text x="330" y="155" fill="#FFC247" font-size="12" font-weight="bold">MOTION_CTRL</text>
-            <text x="510" y="155" fill="#FFC247" font-size="10" font-family="'JetBrains Mono', Consolas" text-anchor="end">0x4002</text>
+            <text x="510" y="155" fill="#FFC247" font-size="12" font-family="'JetBrains Mono', Consolas" text-anchor="end">0x4002</text>
             <!-- 接口焊点节点 -->
             <circle cx="520" cy="175.0" r="3" fill="#04060D" stroke="#FFC247" stroke-width="1.5"/>
-            <text x="330" y="182" fill="#6F84A6" font-size="11">- ROS2 Humble</text><text x="330" y="198" fill="#6F84A6" font-size="11">- Nav2 / SLAM</text>
+            <text x="330" y="182" fill="#6F84A6" font-size="12">- ROS2 Humble</text><text x="330" y="198" fill="#6F84A6" font-size="12">- Nav2 / SLAM</text>
             <!-- 底部高亮装饰线 -->
             <line x1="330" y1="200" x2="510" y2="200" stroke="#FFC247" stroke-opacity="0.4" stroke-width="2"/>
         </g>
@@ -75,10 +81,10 @@
             <rect x="560" y="70" width="200" height="22" fill="#FF2FA8" fill-opacity="0.15"/>
             <!-- 标题与十六进制地址 -->
             <text x="570" y="85" fill="#FF2FA8" font-size="12" font-weight="bold">AI_VISION</text>
-            <text x="750" y="85" fill="#FF2FA8" font-size="10" font-family="'JetBrains Mono', Consolas" text-anchor="end">0x6000</text>
+            <text x="750" y="85" fill="#FF2FA8" font-size="12" font-family="'JetBrains Mono', Consolas" text-anchor="end">0x6000</text>
             <!-- 接口焊点节点 -->
             <circle cx="760" cy="140.0" r="3" fill="#04060D" stroke="#FF2FA8" stroke-width="1.5"/>
-            <text x="570" y="112" fill="#6F84A6" font-size="11">- YOLOv8 / YOLOv11</text><text x="570" y="128" fill="#6F84A6" font-size="11">- Qwen2.5-VL / Ollama</text><text x="570" y="144" fill="#6F84A6" font-size="11">- OpenCV / ONNX</text><text x="570" y="160" fill="#6F84A6" font-size="11">- Intel RealSense D435</text>
+            <text x="570" y="112" fill="#6F84A6" font-size="12">- YOLOv8 / YOLOv11</text><text x="570" y="128" fill="#6F84A6" font-size="12">- Qwen2.5-VL / Ollama</text><text x="570" y="144" fill="#6F84A6" font-size="12">- OpenCV / ONNX</text><text x="570" y="160" fill="#6F84A6" font-size="12">- Intel RealSense D435</text>
             <!-- 底部高亮装饰线 -->
             <line x1="570" y1="200" x2="750" y2="200" stroke="#FF2FA8" stroke-opacity="0.4" stroke-width="2"/>
         </g>
@@ -89,15 +95,21 @@
             <rect x="800" y="70" width="200" height="22" fill="#A8FF5E" fill-opacity="0.15"/>
             <!-- 标题与十六进制地址 -->
             <text x="810" y="85" fill="#A8FF5E" font-size="12" font-weight="bold">WEB_PORTAL</text>
-            <text x="990" y="85" fill="#A8FF5E" font-size="10" font-family="'JetBrains Mono', Consolas" text-anchor="end">0x8000</text>
+            <text x="990" y="85" fill="#A8FF5E" font-size="12" font-family="'JetBrains Mono', Consolas" text-anchor="end">0x8000</text>
             <!-- 接口焊点节点 -->
             <circle cx="1000" cy="140.0" r="3" fill="#04060D" stroke="#A8FF5E" stroke-width="1.5"/>
-            <text x="810" y="112" fill="#6F84A6" font-size="11">- Vue 3 + Element Plus</text><text x="810" y="128" fill="#6F84A6" font-size="11">- Django REST Framework</text><text x="810" y="144" fill="#6F84A6" font-size="11">- Next.js / Tailwind</text><text x="810" y="160" fill="#6F84A6" font-size="11">- Three.js / WebGL</text>
+            <text x="810" y="112" fill="#6F84A6" font-size="12">- Vue 3 + Element Plus</text><text x="810" y="128" fill="#6F84A6" font-size="12">- Django REST Framework</text><text x="810" y="144" fill="#6F84A6" font-size="12">- Next.js / Tailwind</text><text x="810" y="160" fill="#6F84A6" font-size="12">- Three.js / WebGL</text>
             <!-- 底部高亮装饰线 -->
             <line x1="810" y1="200" x2="990" y2="200" stroke="#A8FF5E" stroke-opacity="0.4" stroke-width="2"/>
         </g>
         
     <rect width="1200" height="240" fill="url(#scanlines)" pointer-events="none" />
+    
     <!-- HUD Corners -->
     <path d="M 14,0 L 0,0 L 0,14 M 1186,0 L 1200,0 L 1200,14 M 1186,240 L 1200,240 L 1200,226 M 14,240 L 0,240 L 0,226" fill="none" stroke="#1B2740" stroke-width="2" />
+    <!-- Calibration Crosshairs -->
+    <path d="M 40,24 L 48,24 M 44,20 L 44,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 1152,24 L 1160,24 M 1156,20 L 1156,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 40,228 L 48,228 M 44,224 L 44,232" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 1152,228 L 1160,228 M 1156,224 L 1156,232" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
     </svg>

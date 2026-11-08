@@ -1,7 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 130" width="100%" height="100%" style="background-color:#04060D; font-family: 'JetBrains Mono', Consolas, 'Microsoft YaHei', sans-serif;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 240" width="100%" height="100%" style="background-color:#04060D; font-family: 'JetBrains Mono', Consolas, 'Microsoft YaHei', sans-serif;">
     
     <defs>
         <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-magenta" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
@@ -9,101 +13,137 @@
             <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1"/>
         </pattern>
         <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.06" stroke-width="1"/>
+            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.04" stroke-width="1"/>
         </pattern>
     </defs>
     
-    <rect width="1200" height="130" fill="#04060D" />
-    <rect width="1200" height="130" fill="url(#grid)" />
+    <rect width="1200" height="240" fill="#04060D" />
+    <!-- 巨型工业背景水印 -->
+    <text x="600.0" y="220.0" fill="#FFFFFF" font-size="192.0" font-weight="900" font-family="Arial, Helvetica, sans-serif" opacity="0.02" text-anchor="middle" letter-spacing="-10">02</text>
+    <rect width="1200" height="240" fill="url(#grid)" />
+    <line x1="24" y1="12" x2="24" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="44" y1="12" x2="44" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="64" y1="12" x2="64" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="84" y1="12" x2="84" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="104" y1="12" x2="104" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="124" y1="12" x2="124" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="144" y1="12" x2="144" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="164" y1="12" x2="164" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="184" y1="12" x2="184" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="204" y1="12" x2="204" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="224" y1="12" x2="224" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="244" y1="12" x2="244" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="264" y1="12" x2="264" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="284" y1="12" x2="284" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="304" y1="12" x2="304" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="324" y1="12" x2="324" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="344" y1="12" x2="344" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="364" y1="12" x2="364" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="384" y1="12" x2="384" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="404" y1="12" x2="404" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="424" y1="12" x2="424" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="444" y1="12" x2="444" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="464" y1="12" x2="464" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="484" y1="12" x2="484" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="504" y1="12" x2="504" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="524" y1="12" x2="524" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="544" y1="12" x2="544" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="564" y1="12" x2="564" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="584" y1="12" x2="584" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="604" y1="12" x2="604" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="624" y1="12" x2="624" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="644" y1="12" x2="644" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="664" y1="12" x2="664" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="684" y1="12" x2="684" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="704" y1="12" x2="704" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="724" y1="12" x2="724" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="744" y1="12" x2="744" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="764" y1="12" x2="764" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="784" y1="12" x2="784" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="804" y1="12" x2="804" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="824" y1="12" x2="824" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="844" y1="12" x2="844" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="864" y1="12" x2="864" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="884" y1="12" x2="884" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="904" y1="12" x2="904" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="924" y1="12" x2="924" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="944" y1="12" x2="944" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="964" y1="12" x2="964" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="984" y1="12" x2="984" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="1004" y1="12" x2="1004" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="1024" y1="12" x2="1024" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="1044" y1="12" x2="1044" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="1064" y1="12" x2="1064" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="1084" y1="12" x2="1084" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="1104" y1="12" x2="1104" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="1124" y1="12" x2="1124" y2="16" stroke="#6F84A6" stroke-width="1"/><line x1="1144" y1="12" x2="1144" y2="14" stroke="#6F84A6" stroke-width="1"/><line x1="1164" y1="12" x2="1164" y2="14" stroke="#6F84A6" stroke-width="1"/>
+    <text x="24" y="38" fill="#6F84A6" font-size="8" letter-spacing="1">SYS.TELEMETRY // 30D_WINDOW</text>
+    <text x="1176" y="38" fill="#6F84A6" font-size="8" letter-spacing="1" text-anchor="end">SRC: GITHUB_REST // LIVE</text>
     
-    <path id="data-track" d="M 24,10 L 1176,10" fill="none" stroke="#22E1FF" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="2 4"/>
-    <circle r="3" fill="#FFC247" filter="url(#glow-cyan)">
-        <animateMotion dur="8s" repeatCount="indefinite">
-            <mpath href="#data-track"/>
-        </animateMotion>
-    </circle>
+        <g transform="translate(40, 50)">
+            <!-- 标题与数据值 -->
+            <text x="0" y="0" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="1">NET.FOLLOWERS</text>
+            <text x="220" y="0" fill="#FFFFFF" font-size="12" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="end">4</text>
+            <!-- 底槽 -->
+            <rect x="0" y="8" width="220" height="4" fill="#1B2740" rx="2"/>
+            <!-- 动态数据条 -->
+            <rect x="0" y="8" width="0" height="4" fill="#22E1FF" rx="2">
+                <animate attributeName="width" from="0" to="44.0" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1"/>
+            </rect>
+            <!-- 尾部跟随发光点 -->
+            <circle cx="0" cy="10" r="2" fill="#FFF" filter="url(#glow-cyan)">
+                <animate attributeName="cx" from="0" to="44.0" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1"/>
+            </circle>
+        </g>
+        
+        <g transform="translate(40, 90)">
+            <!-- 标题与数据值 -->
+            <text x="0" y="0" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="1">REPO.PUBLIC</text>
+            <text x="220" y="0" fill="#FFFFFF" font-size="12" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="end">10</text>
+            <!-- 底槽 -->
+            <rect x="0" y="8" width="220" height="4" fill="#1B2740" rx="2"/>
+            <!-- 动态数据条 -->
+            <rect x="0" y="8" width="0" height="4" fill="#FF2FA8" rx="2">
+                <animate attributeName="width" from="0" to="110.0" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1"/>
+            </rect>
+            <!-- 尾部跟随发光点 -->
+            <circle cx="0" cy="10" r="2" fill="#FFF" filter="url(#glow-cyan)">
+                <animate attributeName="cx" from="0" to="110.0" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1"/>
+            </circle>
+        </g>
+        
+        <g transform="translate(40, 130)">
+            <!-- 标题与数据值 -->
+            <text x="0" y="0" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="1">NET.FOLLOWING</text>
+            <text x="220" y="0" fill="#FFFFFF" font-size="12" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="end">5</text>
+            <!-- 底槽 -->
+            <rect x="0" y="8" width="220" height="4" fill="#1B2740" rx="2"/>
+            <!-- 动态数据条 -->
+            <rect x="0" y="8" width="0" height="4" fill="#A8FF5E" rx="2">
+                <animate attributeName="width" from="0" to="55.0" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1"/>
+            </rect>
+            <!-- 尾部跟随发光点 -->
+            <circle cx="0" cy="10" r="2" fill="#FFF" filter="url(#glow-cyan)">
+                <animate attributeName="cx" from="0" to="55.0" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1"/>
+            </circle>
+        </g>
+        
+        <g transform="translate(320, 50)">
+            <!-- 标题与数据值 -->
+            <text x="0" y="0" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="1">RUNTIME.STARS</text>
+            <text x="220" y="0" fill="#FFFFFF" font-size="12" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="end">7</text>
+            <!-- 底槽 -->
+            <rect x="0" y="8" width="220" height="4" fill="#1B2740" rx="2"/>
+            <!-- 动态数据条 -->
+            <rect x="0" y="8" width="0" height="4" fill="#FFC247" rx="2">
+                <animate attributeName="width" from="0" to="30.800000000000004" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1"/>
+            </rect>
+            <!-- 尾部跟随发光点 -->
+            <circle cx="0" cy="10" r="2" fill="#FFF" filter="url(#glow-cyan)">
+                <animate attributeName="cx" from="0" to="30.800000000000004" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1"/>
+            </circle>
+        </g>
+        
+        <g transform="translate(320, 90)">
+            <!-- 标题与数据值 -->
+            <text x="0" y="0" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="1">COMMITS.YTD</text>
+            <text x="220" y="0" fill="#FFFFFF" font-size="12" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="end">21</text>
+            <!-- 底槽 -->
+            <rect x="0" y="8" width="220" height="4" fill="#1B2740" rx="2"/>
+            <!-- 动态数据条 -->
+            <rect x="0" y="8" width="0" height="4" fill="#8B5CFF" rx="2">
+                <animate attributeName="width" from="0" to="46.199999999999996" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1"/>
+            </rect>
+            <!-- 尾部跟随发光点 -->
+            <circle cx="0" cy="10" r="2" fill="#FFF" filter="url(#glow-cyan)">
+                <animate attributeName="cx" from="0" to="46.199999999999996" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1"/>
+            </circle>
+        </g>
+        <text x="320" y="138" fill="#6F84A6" font-size="8" letter-spacing="1">BUS.0x02 // SAMPLE 1Hz</text>
+    <text x="40" y="158" fill="#6F84A6" font-size="8" letter-spacing="1">ACTIVITY.SPARK // 30D</text>
+    <text x="580" y="158" fill="#6F84A6" font-size="8" letter-spacing="1" text-anchor="end">CH1..CH5</text>
     
-        <g transform="translate(150, 70)">
-            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">SYS.FOLLOWERS</text>
-            <!-- 环形底圈 -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#1B2740" stroke-width="4"/>
-            <!-- 动态注入的数据进度圈 -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#22E1FF" stroke-width="4" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="188.5" to="180.96" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
-            </circle>
-            <!-- 中心跳动的真实数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
-                4
-                <!-- 数字加载闪烁错觉 -->
-                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
-            </text>
+        <g transform="translate(40, 170)">
+            <polyline points="0,18 10,12 20,16 30,6 40,10 50,3 60,11 70,17 80,7 90,13 100,2" fill="none" stroke="#22E1FF" stroke-width="1.5" stroke-linejoin="round"/>
+            <polygon points="0,18 10,12 20,16 30,6 40,10 50,3 60,11 70,17 80,7 90,13 100,2 100,25 0,25" fill="#22E1FF" fill-opacity="0.1"/>
         </g>
         
-        <g transform="translate(375, 70)">
-            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">REPO.PUBLIC</text>
-            <!-- 环形底圈 -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#1B2740" stroke-width="4"/>
-            <!-- 动态注入的数据进度圈 -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#FF2FA8" stroke-width="4" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="188.5" to="150.8" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
-            </circle>
-            <!-- 中心跳动的真实数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
-                10
-                <!-- 数字加载闪烁错觉 -->
-                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
-            </text>
+        <g transform="translate(150, 170)">
+            <polyline points="0,10 10,15 20,7 30,12 40,4 50,13 60,8 70,16 80,5 90,11 100,1" fill="none" stroke="#FF2FA8" stroke-width="1.5" stroke-linejoin="round"/>
+            <polygon points="0,10 10,15 20,7 30,12 40,4 50,13 60,8 70,16 80,5 90,11 100,1 100,25 0,25" fill="#FF2FA8" fill-opacity="0.1"/>
         </g>
         
-        <g transform="translate(600, 70)">
-            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">SYS.FOLLOWING</text>
-            <!-- 环形底圈 -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#1B2740" stroke-width="4"/>
-            <!-- 动态注入的数据进度圈 -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#A8FF5E" stroke-width="4" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="188.5" to="169.65" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
-            </circle>
-            <!-- 中心跳动的真实数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
-                5
-                <!-- 数字加载闪烁错觉 -->
-                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
-            </text>
+        <g transform="translate(260, 170)">
+            <polyline points="0,16 10,9 20,13 30,4 40,11 50,6 60,14 70,3 80,10 90,15 100,5" fill="none" stroke="#A8FF5E" stroke-width="1.5" stroke-linejoin="round"/>
+            <polygon points="0,16 10,9 20,13 30,4 40,11 50,6 60,14 70,3 80,10 90,15 100,5 100,25 0,25" fill="#A8FF5E" fill-opacity="0.1"/>
         </g>
         
-        <g transform="translate(825, 70)">
-            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">RUNTIME.STARS</text>
-            <!-- 环形底圈 -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#1B2740" stroke-width="4"/>
-            <!-- 动态注入的数据进度圈 -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#FFC247" stroke-width="4" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="188.5" to="140.244" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
-            </circle>
-            <!-- 中心跳动的真实数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
-                128
-                <!-- 数字加载闪烁错觉 -->
-                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
-            </text>
+        <g transform="translate(370, 170)">
+            <polyline points="0,12 10,18 20,5 30,9 40,14 50,2 60,7 70,12 80,4 90,10 100,0" fill="none" stroke="#FFC247" stroke-width="1.5" stroke-linejoin="round"/>
+            <polygon points="0,12 10,18 20,5 30,9 40,14 50,2 60,7 70,12 80,4 90,10 100,0 100,25 0,25" fill="#FFC247" fill-opacity="0.1"/>
         </g>
         
-        <g transform="translate(1050, 70)">
-            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">COMMITS.YTD</text>
-            <!-- 环形底圈 -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#1B2740" stroke-width="4"/>
-            <!-- 动态注入的数据进度圈 -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#8B5CFF" stroke-width="4" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="188.5" to="94.25" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
-            </circle>
-            <!-- 中心跳动的真实数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
-                1024
-                <!-- 数字加载闪烁错觉 -->
-                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
-            </text>
+        <g transform="translate(480, 170)">
+            <polyline points="0,8 10,13 20,6 30,15 40,3 50,10 60,5 70,14 80,2 90,9 100,4" fill="none" stroke="#8B5CFF" stroke-width="1.5" stroke-linejoin="round"/>
+            <polygon points="0,8 10,13 20,6 30,15 40,3 50,10 60,5 70,14 80,2 90,9 100,4 100,25 0,25" fill="#8B5CFF" fill-opacity="0.1"/>
         </g>
-        
-    <rect width="1200" height="130" fill="url(#scanlines)" pointer-events="none" />
+        <line x1="40" y1="195" x2="580" y2="195" stroke="#1B2740" stroke-width="1"/><polygon points="880.0,95.25 901.4341287436648,107.625 901.4341287436648,132.375 880.0,144.75 858.5658712563352,132.375 858.5658712563352,107.62500000000001" fill="none" stroke="#1B2740" stroke-width="1"/><polygon points="880.0,70.5 922.8682574873297,95.25 922.8682574873297,144.75 880.0,169.5 837.1317425126703,144.75000000000003 837.1317425126703,95.25000000000003" fill="none" stroke="#1B2740" stroke-width="1"/><polygon points="880.0,45.0 944.951905283833,82.5 944.951905283833,157.5 880.0,195.0 815.0480947161672,157.50000000000003 815.048094716167,82.50000000000006" fill="none" stroke="#1B2740" stroke-width="1"/><line x1="880" y1="120" x2="880.0" y2="45.0" stroke="#1B2740" stroke-width="1"/><line x1="880" y1="120" x2="944.951905283833" y2="82.5" stroke="#1B2740" stroke-width="1"/><line x1="880" y1="120" x2="944.951905283833" y2="157.5" stroke="#1B2740" stroke-width="1"/><line x1="880" y1="120" x2="880.0" y2="195.0" stroke="#1B2740" stroke-width="1"/><line x1="880" y1="120" x2="815.0480947161672" y2="157.50000000000003" stroke="#1B2740" stroke-width="1"/><line x1="880" y1="120" x2="815.048094716167" y2="82.50000000000006" stroke="#1B2740" stroke-width="1"/>
+        <polygon points="880.0,48.75 935.209119491258,88.125 925.466333698683,146.25 880.0,187.5 841.0288568297003,142.5 828.0384757729337,90.00000000000004" fill="#22E1FF" fill-opacity="0.2" stroke="#22E1FF" stroke-width="2" filter="url(#glow-cyan)">
+            <animate attributeName="fill-opacity" values="0.1;0.3;0.1" dur="4s" repeatCount="indefinite"/>
+        </polygon>
+        <circle cx="880.0" cy="48.75" r="3" fill="#FFF"/><text x="880.0" y="34.0" fill="#6F84A6" font-size="10" text-anchor="middle">FIRMWARE</text><circle cx="935.209119491258" cy="88.125" r="3" fill="#FFF"/><text x="966.6025403784439" y="79.0" fill="#6F84A6" font-size="10" text-anchor="start">ROBOTICS</text><circle cx="925.466333698683" cy="146.25" r="3" fill="#FFF"/><text x="966.6025403784439" y="169.0" fill="#6F84A6" font-size="10" text-anchor="start">AI_VISION</text><circle cx="880.0" cy="187.5" r="3" fill="#FFF"/><text x="880.0" y="214.0" fill="#6F84A6" font-size="10" text-anchor="middle">WEB_DEV</text><circle cx="841.0288568297003" cy="142.5" r="3" fill="#FFF"/><text x="793.3974596215562" y="169.00000000000003" fill="#6F84A6" font-size="10" text-anchor="end">OPEN_SRC</text><circle cx="828.0384757729337" cy="90.00000000000004" r="3" fill="#FFF"/><text x="793.3974596215561" y="79.00000000000006" fill="#6F84A6" font-size="10" text-anchor="end">ACTIVITY</text>
+    <rect width="1200" height="240" fill="url(#scanlines)" pointer-events="none" />
+    
     <!-- HUD Corners -->
-    <path d="M 14,0 L 0,0 L 0,14 M 1186,0 L 1200,0 L 1200,14 M 1186,130 L 1200,130 L 1200,116 M 14,130 L 0,130 L 0,116" fill="none" stroke="#1B2740" stroke-width="2" />
+    <path d="M 14,0 L 0,0 L 0,14 M 1186,0 L 1200,0 L 1200,14 M 1186,240 L 1200,240 L 1200,226 M 14,240 L 0,240 L 0,226" fill="none" stroke="#1B2740" stroke-width="2" />
+    <!-- Calibration Crosshairs -->
+    <path d="M 40,24 L 48,24 M 44,20 L 44,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 1152,24 L 1160,24 M 1156,20 L 1156,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 40,228 L 48,228 M 44,224 L 44,232" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 1152,228 L 1160,228 M 1156,224 L 1156,232" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
     </svg>
