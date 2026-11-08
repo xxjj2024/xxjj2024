@@ -169,25 +169,164 @@ def render_footer(data):
     """
     return svg_base(h, content)
 
-# --- 占位符：供其他模块直接使用简单的线框代替，符合极客约束 ---
-def render_placeholder(name, height):
-    return svg_base(height, f"""
-    <rect x="24" y="24" width="{WIDTH-48}" height="{height-48}" fill="{COLORS['panel']}" stroke="{COLORS['stroke']}" stroke-width="1" stroke-dasharray="4 4" rx="14"/>
-    <text x="600" y="{height/2}" fill="{COLORS['dim']}" font-size="16" letter-spacing="4" text-anchor="middle" font-weight="bold">MODULE [{name}] : INITIALIZING...</text>
-    <circle cx="{WIDTH-48}" cy="48" r="4" fill="{COLORS['yellow']}">
-        <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+# --- 区块 02: TELEMETRY ---
+def render_telemetry(data):
+    h = 130
+    
+    # 顶部滑动的数据包轨迹
+    track = f"""
+    <path id="data-track" d="M 24,10 L {WIDTH-24},10" fill="none" stroke="{COLORS['cyan']}" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="2 4"/>
+    <circle r="3" fill="{COLORS['yellow']}" filter="url(#glow-cyan)">
+        <animateMotion dur="8s" repeatCount="indefinite">
+            <mpath href="#data-track"/>
+        </animateMotion>
     </circle>
-    """)
+    """
+    
+    # 数据表盘生成器
+    def make_dial(x, title, value, max_val, color):
+        percent = min(1.0, value / max_val)
+        dash_full = 188.5 # 2 * pi * r (r=30)
+        dash_val = dash_full * percent
+        
+        return f"""
+        <g transform="translate({x}, 70)">
+            <text x="0" y="-45" fill="{COLORS['dim']}" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">{title}</text>
+            <!-- 环形背景 -->
+            <circle cx="0" cy="0" r="30" fill="none" stroke="{COLORS['stroke']}" stroke-width="4"/>
+            <!-- 动态加载的进度环 -->
+            <circle cx="0" cy="0" r="30" fill="none" stroke="{color}" stroke-width="4" stroke-dasharray="{dash_full}" stroke-dashoffset="{dash_full}" transform="rotate(-90)" stroke-linecap="round">
+                <animate attributeName="stroke-dashoffset" from="{dash_full}" to="{dash_full - dash_val}" dur="2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+            </circle>
+            <!-- 中心数据 -->
+            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">{value}</text>
+        </g>
+        """
+
+    # 模拟数据 (后续可从 GitHub API 接入真实数据)
+    dials = [
+        make_dial(150, "SYS.STARS", 42, 100, COLORS['cyan']),
+        make_dial(375, "COMMITS.YTD", 845, 1000, COLORS['magenta']),
+        make_dial(600, "PR.MERGED", 12, 50, COLORS['green']),
+        make_dial(825, "REPO.ACTIVE", 8, 20, COLORS['yellow']),
+        make_dial(1050, "NET.FOLLOW", 18, 50, COLORS['purple'])
+    ]
+    
+    return svg_base(h, track + "".join(dials))
+
+# --- 区块 04: TOOLCHAIN ---
+def render_toolchain(data):
+    h = 240
+    
+    # 绘制背景的装饰性拓扑连线
+    lines = f"""
+    <path d="M 120,120 L 300,120 L 400,60 L 700,60 L 800,180 L 1050,180" fill="none" stroke="{COLORS['stroke']}" stroke-width="2"/>
+    <path d="M 300,120 L 400,180 L 700,180" fill="none" stroke="{COLORS['stroke']}" stroke-width="2"/>
+    """
+
+    # 六边形生成器
+    def make_hex(cx, cy, label, color):
+        # 计算六边形顶点 (r=45)
+        points = "0,-45 39,-22.5 39,22.5 0,45 -39,22.5 -39,-22.5"
+        return f"""
+        <g transform="translate({cx}, {cy})">
+            <!-- 外框脉冲动画 -->
+            <polygon points="{points}" fill="{COLORS['panel']}" stroke="{color}" stroke-width="1.5">
+                <animate attributeName="stroke-opacity" values="0.3;1;0.3" dur="{3 + (cx%3)}s" repeatCount="indefinite"/>
+            </polygon>
+            <!-- 核心发光点 -->
+            <circle cx="0" cy="-30" r="2" fill="{color}" />
+            <text x="0" y="5" fill="#FFFFFF" font-size="12" font-weight="bold" text-anchor="middle">{label}</text>
+        </g>
+        """
+
+    hexes = []
+    # LANG (Cyan)
+    hexes.append(make_hex(150, 120, "C/C++", COLORS['cyan']))
+    hexes.append(make_hex(240, 120, "Python", COLORS['cyan']))
+    # MCU/RTOS (Yellow)
+    hexes.append(make_hex(330, 68, "STM32", COLORS['yellow']))
+    hexes.append(make_hex(420, 68, "ESP32", COLORS['yellow']))
+    hexes.append(make_hex(510, 68, "FreeRTOS", COLORS['yellow']))
+    # AI/SYS (Magenta)
+    hexes.append(make_hex(330, 172, "ROS2", COLORS['magenta']))
+    hexes.append(make_hex(420, 172, "OpenCV", COLORS['magenta']))
+    hexes.append(make_hex(510, 172, "YOLOv8", COLORS['magenta']))
+    hexes.append(make_hex(600, 172, "Qwen-VL", COLORS['magenta']))
+    # WEB/OTHER (Green)
+    hexes.append(make_hex(780, 120, "Vue3", COLORS['green']))
+    hexes.append(make_hex(870, 120, "Django", COLORS['green']))
+    hexes.append(make_hex(960, 120, "Next.js", COLORS['green']))
+
+    title = f"<text x=\"24\" y=\"30\" fill=\"{COLORS['dim']}\" font-size=\"12\" font-weight=\"bold\" letter-spacing=\"2\">&gt;_SYS.TOPOLOGY / TOOLCHAIN</text>"
+    
+    return svg_base(h, title + lines + "".join(hexes))
+
+# --- 区块 05: BUILDS ---
+def render_builds(data):
+    h = 420
+    content = ""
+    
+    title = f"<text x=\"24\" y=\"30\" fill=\"{COLORS['dim']}\" font-size=\"12\" font-weight=\"bold\" letter-spacing=\"2\">ACCESSING_RECORDS // BUILDS</text>"
+    content += title
+
+    def make_card(x, y, build):
+        w = 360
+        card_h = 150
+        return f"""
+        <g transform="translate({x}, {y})">
+            <!-- 卡片底板 -->
+            <rect x="0" y="0" width="{w}" height="{card_h}" fill="{COLORS['panel']}" stroke="{COLORS['stroke']}" stroke-width="1"/>
+            
+            <!-- 瞄准器边角 (HUD) -->
+            <path d="M -5,-5 L 10,-5 M -5,-5 L -5,10" fill="none" stroke="{COLORS['cyan']}" stroke-width="2"/>
+            <path d="M {w+5},-5 L {w-10},-5 M {w+5},-5 L {w+5},10" fill="none" stroke="{COLORS['cyan']}" stroke-width="2"/>
+            <path d="M -5,{card_h+5} L 10,{card_h+5} M -5,{card_h+5} L -5,{card_h-10}" fill="none" stroke="{COLORS['cyan']}" stroke-width="2"/>
+            <path d="M {w+5},{card_h+5} L {w-10},{card_h+5} M {w+5},{card_h+5} L {w+5},{card_h-10}" fill="none" stroke="{COLORS['cyan']}" stroke-width="2"/>
+
+            <!-- 顶部装饰带 -->
+            <rect x="0" y="0" width="{w}" height="4" fill="{COLORS['purple']}"/>
+            
+            <!-- 编号与语言标签 -->
+            <text x="16" y="30" fill="{COLORS['yellow']}" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="900">[{build['id']}]</text>
+            <text x="60" y="28" fill="{COLORS['dim']}" font-size="10" font-weight="bold">{build['lang'].upper()}</text>
+            
+            <!-- 呼吸状态点 -->
+            <circle cx="{w-20}" cy="24" r="4" fill="{COLORS['green']}">
+                <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+            </circle>
+
+            <!-- 项目代号 -->
+            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="900" letter-spacing="1">{build['codename']}</text>
+            
+            <!-- 中文描述 (分两行) -->
+            <text x="16" y="95" fill="{COLORS['cyan']}" font-size="13">{build['desc'][0]}</text>
+            <text x="16" y="115" fill="{COLORS['cyan']}" font-size="13">{build['desc'][1]}</text>
+            
+            <!-- 底部装饰线索 -->
+            <line x1="16" y1="135" x2="{w-16}" y2="135" stroke="{COLORS['stroke']}" stroke-width="1" stroke-dasharray="2 2"/>
+        </g>
+        """
+
+    # 横向排列三个卡片
+    start_x = (WIDTH - (360 * 3 + 40 * 2)) / 2 # 居中计算
+    for i, build in enumerate(data['builds']):
+        content += make_card(start_x + i * 400, 70, build)
+        
+    return svg_base(h, content)
 
 if __name__ == "__main__":
     os.makedirs(ASSETS_DIR, exist_ok=True)
     data = load_data()
     
     with open(f"{ASSETS_DIR}/01_hero.svg", "w", encoding="utf-8") as f: f.write(render_hero(data))
-    with open(f"{ASSETS_DIR}/02_telemetry.svg", "w", encoding="utf-8") as f: f.write(render_placeholder("TELEMETRY_DATA", 112))
+    
+    # 替换这三行，调用新写的高级函数
+    with open(f"{ASSETS_DIR}/02_telemetry.svg", "w", encoding="utf-8") as f: f.write(render_telemetry(data))
     with open(f"{ASSETS_DIR}/03_whoami.svg", "w", encoding="utf-8") as f: f.write(render_whoami(data))
-    with open(f"{ASSETS_DIR}/04_toolchain.svg", "w", encoding="utf-8") as f: f.write(render_placeholder("HARDWARE_TOOLCHAIN", 214))
-    with open(f"{ASSETS_DIR}/05_builds.svg", "w", encoding="utf-8") as f: f.write(render_placeholder("RECENT_BUILDS", 392))
+    with open(f"{ASSETS_DIR}/04_toolchain.svg", "w", encoding="utf-8") as f: f.write(render_toolchain(data))
+    with open(f"{ASSETS_DIR}/05_builds.svg", "w", encoding="utf-8") as f: f.write(render_builds(data))
+    
     with open(f"{ASSETS_DIR}/08_footer.svg", "w", encoding="utf-8") as f: f.write(render_footer(data))
     
-    print("SVG assets successfully rendered.")
+    print("Advanced SVG assets successfully rendered.")
