@@ -173,7 +173,23 @@ def render_footer(data):
 def render_telemetry(data):
     h = 130
     
-    # 顶部滑动的数据包轨迹
+    # 尝试加载真实抓取的 GitHub 遥测数据
+    real_data = {}
+    try:
+        import json, os
+        if os.path.exists("data/github.json"):
+            with open("data/github.json", "r", encoding="utf-8") as f:
+                gh_raw = json.load(f)
+                real_data = {
+                    "followers": gh_raw.get("followers", 0),
+                    "repos": gh_raw.get("public_repos", 0),
+                    "following": gh_raw.get("following", 0)
+                    # 注: Stars 和 Commits 需要更复杂的 GraphQL API，这里用现有 REST 字段做示范
+                }
+    except Exception as e:
+        print(f"[-] Telemetry sensor offline, using fallback data. ({e})")
+
+    # 顶部滑动的数据包轨迹 (SMIL 动效)
     track = f"""
     <path id="data-track" d="M 24,10 L {WIDTH-24},10" fill="none" stroke="{COLORS['cyan']}" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="2 4"/>
     <circle r="3" fill="{COLORS['yellow']}" filter="url(#glow-cyan)">
@@ -183,7 +199,7 @@ def render_telemetry(data):
     </circle>
     """
     
-    # 数据表盘生成器
+    # 数据表盘生成器 (支持动态输入真实数值)
     def make_dial(x, title, value, max_val, color):
         percent = min(1.0, value / max_val)
         dash_full = 188.5 # 2 * pi * r (r=30)
@@ -192,24 +208,33 @@ def render_telemetry(data):
         return f"""
         <g transform="translate({x}, 70)">
             <text x="0" y="-45" fill="{COLORS['dim']}" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">{title}</text>
-            <!-- 环形背景 -->
+            <!-- 环形底圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="{COLORS['stroke']}" stroke-width="4"/>
-            <!-- 动态加载的进度环 -->
+            <!-- 动态注入的数据进度圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="{color}" stroke-width="4" stroke-dasharray="{dash_full}" stroke-dashoffset="{dash_full}" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="{dash_full}" to="{dash_full - dash_val}" dur="2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+                <animate attributeName="stroke-dashoffset" from="{dash_full}" to="{dash_full - dash_val}" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
             </circle>
-            <!-- 中心数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">{value}</text>
+            <!-- 中心跳动的真实数据 -->
+            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
+                {value}
+                <!-- 数字加载闪烁错觉 -->
+                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
+            </text>
         </g>
         """
 
-    # 模拟数据 (后续可从 GitHub API 接入真实数据)
+    # 如果有真实数据就用真实数据，否则用视觉效果极佳的 Mock 数据填充监控矩阵
+    sys_followers = real_data.get("followers", 42)
+    sys_repos = real_data.get("repos", 18)
+    sys_following = real_data.get("following", 12)
+
     dials = [
-        make_dial(150, "SYS.STARS", 42, 100, COLORS['cyan']),
-        make_dial(375, "COMMITS.YTD", 845, 1000, COLORS['magenta']),
-        make_dial(600, "PR.MERGED", 12, 50, COLORS['green']),
-        make_dial(825, "REPO.ACTIVE", 8, 20, COLORS['yellow']),
-        make_dial(1050, "NET.FOLLOW", 18, 50, COLORS['purple'])
+        make_dial(150, "SYS.FOLLOWERS", sys_followers, max(100, sys_followers*2), COLORS['cyan']),
+        make_dial(375, "REPO.PUBLIC", sys_repos, max(50, sys_repos*2), COLORS['magenta']),
+        make_dial(600, "SYS.FOLLOWING", sys_following, max(50, sys_following*2), COLORS['green']),
+        # 预留给未来通过 GraphQL 抓取的复杂数据
+        make_dial(825, "RUNTIME.STARS", 128, 500, COLORS['yellow']), 
+        make_dial(1050, "COMMITS.YTD", 1024, 2048, COLORS['purple'])
     ]
     
     return svg_base(h, track + "".join(dials))

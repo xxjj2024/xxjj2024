@@ -24,63 +24,83 @@
     </circle>
     
         <g transform="translate(150, 70)">
-            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">SYS.STARS</text>
-            <!-- 环形背景 -->
+            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">SYS.FOLLOWERS</text>
+            <!-- 环形底圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="#1B2740" stroke-width="4"/>
-            <!-- 动态加载的进度环 -->
+            <!-- 动态注入的数据进度圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="#22E1FF" stroke-width="4" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="188.5" to="109.33" dur="2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+                <animate attributeName="stroke-dashoffset" from="188.5" to="180.96" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
             </circle>
-            <!-- 中心数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">42</text>
+            <!-- 中心跳动的真实数据 -->
+            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
+                4
+                <!-- 数字加载闪烁错觉 -->
+                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
+            </text>
         </g>
         
         <g transform="translate(375, 70)">
-            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">COMMITS.YTD</text>
-            <!-- 环形背景 -->
+            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">REPO.PUBLIC</text>
+            <!-- 环形底圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="#1B2740" stroke-width="4"/>
-            <!-- 动态加载的进度环 -->
+            <!-- 动态注入的数据进度圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="#FF2FA8" stroke-width="4" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="188.5" to="29.2175" dur="2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+                <animate attributeName="stroke-dashoffset" from="188.5" to="150.8" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
             </circle>
-            <!-- 中心数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">845</text>
+            <!-- 中心跳动的真实数据 -->
+            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
+                10
+                <!-- 数字加载闪烁错觉 -->
+                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
+            </text>
         </g>
         
         <g transform="translate(600, 70)">
-            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">PR.MERGED</text>
-            <!-- 环形背景 -->
+            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">SYS.FOLLOWING</text>
+            <!-- 环形底圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="#1B2740" stroke-width="4"/>
-            <!-- 动态加载的进度环 -->
+            <!-- 动态注入的数据进度圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="#A8FF5E" stroke-width="4" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="188.5" to="143.26" dur="2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+                <animate attributeName="stroke-dashoffset" from="188.5" to="169.65" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
             </circle>
-            <!-- 中心数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">12</text>
+            <!-- 中心跳动的真实数据 -->
+            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
+                5
+                <!-- 数字加载闪烁错觉 -->
+                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
+            </text>
         </g>
         
         <g transform="translate(825, 70)">
-            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">REPO.ACTIVE</text>
-            <!-- 环形背景 -->
+            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">RUNTIME.STARS</text>
+            <!-- 环形底圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="#1B2740" stroke-width="4"/>
-            <!-- 动态加载的进度环 -->
+            <!-- 动态注入的数据进度圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="#FFC247" stroke-width="4" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="188.5" to="113.1" dur="2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+                <animate attributeName="stroke-dashoffset" from="188.5" to="140.244" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
             </circle>
-            <!-- 中心数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">8</text>
+            <!-- 中心跳动的真实数据 -->
+            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
+                128
+                <!-- 数字加载闪烁错觉 -->
+                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
+            </text>
         </g>
         
         <g transform="translate(1050, 70)">
-            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">NET.FOLLOW</text>
-            <!-- 环形背景 -->
+            <text x="0" y="-45" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="1" text-anchor="middle">COMMITS.YTD</text>
+            <!-- 环形底圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="#1B2740" stroke-width="4"/>
-            <!-- 动态加载的进度环 -->
+            <!-- 动态注入的数据进度圈 -->
             <circle cx="0" cy="0" r="30" fill="none" stroke="#8B5CFF" stroke-width="4" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90)" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="188.5" to="120.64" dur="2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+                <animate attributeName="stroke-dashoffset" from="188.5" to="94.25" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
             </circle>
-            <!-- 中心数据 -->
-            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">18</text>
+            <!-- 中心跳动的真实数据 -->
+            <text x="0" y="5" fill="#FFFFFF" font-size="16" font-family="'JetBrains Mono', Consolas" font-weight="bold" text-anchor="middle">
+                1024
+                <!-- 数字加载闪烁错觉 -->
+                <animate attributeName="opacity" values="0;1;0.5;1" dur="1s" repeatCount="1" fill="freeze"/>
+            </text>
         </g>
         
     <rect width="1200" height="130" fill="url(#scanlines)" pointer-events="none" />
