@@ -17,24 +17,50 @@ def load_data():
 def svg_base(height, content, watermark="00"):
     defs = f"""
     <defs>
+        <!-- 泛光滤镜 -->
         <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-yellow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <filter id="glow-magenta" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
+        <!-- 沉浸式渐变遮罩 (用于平滑折线图) -->
+        <linearGradient id="grad-cyan" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="{COLORS['cyan']}" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="{COLORS['cyan']}" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-magenta" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="{COLORS['magenta']}" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="{COLORS['magenta']}" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-green" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="{COLORS['green']}" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="{COLORS['green']}" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-yellow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="{COLORS['yellow']}" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="{COLORS['yellow']}" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-purple" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="{COLORS['purple']}" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="{COLORS['purple']}" stop-opacity="0.0"/>
+        </linearGradient>
+        
         <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
             <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.03" stroke-width="1"/>
         </pattern>
         <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <rect width="40" height="40" fill="none" stroke="{COLORS['cyan']}" stroke-opacity="0.04" stroke-width="1"/>
-            <circle cx="40" cy="40" r="1" fill="{COLORS['cyan']}" opacity="0.2"/>
+            <rect width="40" height="40" fill="none" stroke="{COLORS['cyan']}" stroke-opacity="0.03" stroke-width="1"/>
         </pattern>
         <!-- 十六进制内存流底纹 (双副本保证 300px 无缝滚动) -->
         <pattern id="hex-rain" width="300" height="300" patternUnits="userSpaceOnUse">
-            <g fill="{COLORS['cyan']}" opacity="0.05" font-size="9" font-family="'JetBrains Mono', Consolas" letter-spacing="2">
+            <g fill="{COLORS['cyan']}" opacity="0.04" font-size="9" font-family="'JetBrains Mono', Consolas" letter-spacing="2">
                 <text x="20" y="20">0x0800 0x1A2B 0x3C4D 0x5E6F</text>
                 <text x="80" y="80">0x2000 0xDEAD 0xBEEF 0x0000</text>
                 <text x="150" y="140">0x4002 0x8899 0xAABB 0xCCDD</text>
@@ -50,25 +76,36 @@ def svg_base(height, content, watermark="00"):
         </pattern>
     </defs>
     """
+
+    # 动态边框 (HUD Viewport) 与 REC 录制指示灯
+    hud_frame = f"""
+    <!-- 全局微距网格与内存流 -->
+    <rect width="{WIDTH}" height="{height}" fill="url(#hex-rain)" />
+    <rect width="{WIDTH}" height="{height}" fill="url(#grid)" />
+    
+    <!-- 取景器物理边框 -->
+    <rect x="8" y="8" width="{WIDTH-16}" height="{height-16}" fill="none" stroke="{COLORS['stroke']}" stroke-width="1.5"/>
+    <!-- 四角重装甲锁定框 -->
+    <path d="M 8,40 L 8,8 L 40,8 M {WIDTH-40},8 L {WIDTH-8},8 L {WIDTH-8},40 M 8,{height-40} L 8,{height-8} L 40,{height-8} M {WIDTH-40},{height-8} L {WIDTH-8},{height-8} L {WIDTH-8},{height-40}" fill="none" stroke="{COLORS['cyan']}" stroke-width="2.5" opacity="0.7"/>
+    
+    <!-- 顶部状态栏元数据 -->
+    <text x="18" y="22" fill="{COLORS['dim']}" font-size="9" letter-spacing="1">SYS.MNTR // LIVE FEED</text>
+    <circle cx="{WIDTH-45}" cy="18" r="3.5" fill="{COLORS['magenta']}">
+        <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="{WIDTH-35}" y="22" fill="{COLORS['magenta']}" font-size="9" font-weight="bold" letter-spacing="1">REC</text>
+    <text x="{WIDTH-65}" y="22" fill="{COLORS['dim']}" font-size="9" text-anchor="end">UPLINK_ESTABLISHED</text>
+    """
+
     # 强制覆盖底层属性，禁用 JS
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {WIDTH} {height}" width="100%" height="100%" style="background-color:{COLORS['bg']}; font-family: 'JetBrains Mono', Consolas, 'Microsoft YaHei', sans-serif;">
     {defs}
     <rect width="{WIDTH}" height="{height}" fill="{COLORS['bg']}" />
     <!-- 巨型工业背景水印 -->
     <text x="{WIDTH/2}" y="{height/2 + 100}" fill="#FFFFFF" font-size="{height * 0.8}" font-weight="900" font-family="Arial, Helvetica, sans-serif" opacity="0.02" text-anchor="middle" letter-spacing="-10">{watermark}</text>
-    <!-- Hex 内存流与极客网格 -->
-    <rect width="{WIDTH}" height="{height}" fill="url(#hex-rain)" />
-    <rect width="{WIDTH}" height="{height}" fill="url(#grid)" />
+    {hud_frame}
     {content}
     <rect width="{WIDTH}" height="{height}" fill="url(#scanlines)" pointer-events="none" />
-    
-    <!-- HUD Corners -->
-    <path d="M 14,0 L 0,0 L 0,14 M {WIDTH-14},0 L {WIDTH},0 L {WIDTH},14 M {WIDTH-14},{height} L {WIDTH},{height} L {WIDTH},{height-14} M 14,{height} L 0,{height} L 0,{height-14}" fill="none" stroke="{COLORS['stroke']}" stroke-width="2" />
-    <!-- Calibration Crosshairs -->
-    <path d="M 40,24 L 48,24 M 44,20 L 44,28" fill="none" stroke="{COLORS['dim']}" stroke-width="1.5"/>
-    <path d="M {WIDTH-48},24 L {WIDTH-40},24 M {WIDTH-44},20 L {WIDTH-44},28" fill="none" stroke="{COLORS['dim']}" stroke-width="1.5"/>
-    <path d="M 40,{height-24} L 48,{height-24} M 44,{height-28} L 44,{height-20}" fill="none" stroke="{COLORS['dim']}" stroke-width="1.5"/>
-    <path d="M {WIDTH-48},{height-24} L {WIDTH-40},{height-24} M {WIDTH-44},{height-28} L {WIDTH-44},{height-20}" fill="none" stroke="{COLORS['dim']}" stroke-width="1.5"/>
     </svg>"""
 
 # --- 区块 01: HERO ---
@@ -191,41 +228,61 @@ def render_whoami(data):
         <text y="192" fill="{COLORS['green']}">$ <tspan fill="#FFF">git log -1 --oneline</tspan></text>
         <text y="216" fill="{COLORS['dim']}"><tspan fill="{COLORS['yellow']}">9c1f2ab</tspan> polish: PWM jitter 12us -&gt; 2us</text>
     </g>
-
-    <!-- 右侧 Boot Log 面板 (逐渐亮起) -->
-    <rect x="728" y="24" width="448" height="{h-48}" rx="12" fill="{COLORS['panel']}" stroke="{COLORS['stroke']}" stroke-width="1"/>
-    <g font-size="14" transform="translate(748, 64)" fill="{COLORS['dim']}">
     """
+
+    log_panel = f'<rect x="728" y="24" width="228" height="{h-48}" rx="12" fill="{COLORS['panel']}" stroke="{COLORS['stroke']}" stroke-width="1"/>'
+
     logs = [
-        "[ 0.000] system boot: JASMINE//OS v2.6.1_PROD", 
-        "[ 0.041] mcu_core: cortex-m4 @ 168MHz ... [OK]", 
-        "[ 0.082] bus_init: i2c1, spi2, uart4    ... [OK]", 
-        "[ 0.123] motion_sys: ros2_humble node  ... [ONLINE]",
-        "[ 0.164] vision_ai: qwen2.5-vl loaded   ... [STANDBY]",
-        "[ 0.205] fs_mount: /dev/sda1 -> /lab   ... [OK]",
-        "[ 0.246] ---------------------------------------",
-        "[ 0.287] proc_spawn: haloflux_agent_monitor.js", 
-        "[ 0.328] ws_stream: connected to model [glm-5.3]",
-        "[ 0.369] dom_canvas: hybrid render sync ... [ACTIVE]",
-        "[ 0.410] ready for command input_"
+        "[ 0.00] jasmine_os boot", 
+        "[ 0.04] mcu_core: OK", 
+        "[ 0.08] bus_init: OK", 
+        "[ 0.12] ros2_node: ONLINE",
+        "[ 0.16] qwen2.5: STANDBY",
+        "[ 0.24] fs_mount: /lab OK",
+        "[ 0.28] -------------",
+        "[ 0.32] init: haloflux.js",
+        "[ 0.36] ready for input_"
     ]
+    log_text = f'<g font-size="12" transform="translate(740, 60)" fill="{COLORS["dim"]}">'
     for i, log in enumerate(logs):
-        if "ready" in log or any(tag in log for tag in ("[OK]", "[ONLINE]", "[ACTIVE]")):
-            color = COLORS['green']
-        elif "[STANDBY]" in log:
-            color = COLORS['yellow']
-        elif "haloflux" in log or "glm-5.3" in log:
-            color = COLORS['cyan']
-        else:
-            color = COLORS['dim']
-        content += f"""
-        <text y="{i*24}" fill="{color}" opacity="0">
-            {log}
-            <animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="{i*0.13}s" fill="freeze" />
-        </text>
-        """
-    content += "</g>"
-    return svg_base(h, content, "03")
+        color = COLORS['green'] if "ONLINE" in log or "ready" in log else (COLORS['yellow'] if "STANDBY" in log else COLORS['dim'])
+        log_text += f'<text y="{i*24}" fill="{color}" opacity="0">{log}<animate attributeName="opacity" from="0" to="1" dur="0.1s" begin="{i*0.15}s" fill="freeze" /></text>'
+    log_text += "</g>"
+
+    log_meta = f"""
+    <text x="740" y="48" fill="{COLORS['dim']}" font-size="8" letter-spacing="1">BOOT.LOG // KERNEL</text>
+    <line x1="740" y1="288" x2="944" y2="288" stroke="{COLORS['stroke']}" stroke-width="1"/>
+    <text x="740" y="302" fill="{COLORS['dim']}" font-size="8" letter-spacing="1">BUFFER 09/256 // ERR 0</text>
+    """
+
+    # --- HALOFLUX AI 代理监控拓扑 ---
+    haloflux = f"""
+    <g transform="translate(972, 24)">
+        <rect x="0" y="0" width="204" height="{h-48}" rx="12" fill="{COLORS['panel']}" stroke="{COLORS['stroke']}" stroke-width="1"/>
+        <text x="12" y="24" fill="{COLORS['cyan']}" font-size="10" font-weight="bold">AGENT // HALOFLUX</text>
+        <line x1="12" y1="32" x2="192" y2="32" stroke="{COLORS['stroke']}" stroke-width="1"/>
+        
+        <!-- GLM-5.3 WS/SSE 流式节点模型 -->
+        <circle cx="102" cy="110" r="30" fill="none" stroke="{COLORS['magenta']}" stroke-width="1" stroke-dasharray="2 4">
+             <animateTransform attributeName="transform" type="rotate" from="0 102 110" to="360 102 110" dur="10s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="102" cy="110" r="15" fill="{COLORS['bg']}" stroke="{COLORS['magenta']}" stroke-width="2" filter="url(#glow-magenta)"/>
+        <text x="102" y="113" fill="#FFFFFF" font-size="9" font-weight="bold" text-anchor="middle">GLM</text>
+        
+        <!-- DOM-Canvas 混合渲染数据流 -->
+        <path d="M 102,140 L 102,190" fill="none" stroke="{COLORS['cyan']}" stroke-width="1.5" stroke-dasharray="4 4">
+            <animate attributeName="stroke-dashoffset" from="16" to="0" dur="1s" repeatCount="indefinite"/>
+        </path>
+        <rect x="52" y="190" width="100" height="30" rx="4" fill="none" stroke="{COLORS['cyan']}" stroke-width="1"/>
+        <text x="102" y="209" fill="{COLORS['cyan']}" font-size="9" text-anchor="middle">DOM/CANVAS SYNC</text>
+        <text x="102" y="245" fill="{COLORS['dim']}" font-size="8" letter-spacing="1" text-anchor="middle">60FPS // HYBRID</text>
+        
+        <circle cx="16" cy="270" r="3" fill="{COLORS['green']}"><animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/></circle>
+        <text x="26" y="273" fill="{COLORS['dim']}" font-size="9">WS/SSE: CONNECTED</text>
+    </g>
+    """
+
+    return svg_base(h, content + log_panel + log_meta + log_text + haloflux, "03")
 
 # --- 区块 08: FOOTER ---
 def render_footer(data):
@@ -318,12 +375,19 @@ def render_telemetry(data):
         </g>
         """
 
-    # 底部微型波形图 (30 天活动频率示意)
-    def make_sparkline(x, y, color, pts):
+    # 底部微型波形图 (平滑贝塞尔曲线 + 渐变光影)
+    def make_sparkline(x, y, color, grad_id, smooth_path):
         return f"""
         <g transform="translate({x}, {y})">
-            <polyline points="{pts}" fill="none" stroke="{color}" stroke-width="1.5" stroke-linejoin="round"/>
-            <polygon points="{pts} 100,25 0,25" fill="{color}" fill-opacity="0.1"/>
+            <!-- 曲线主体 -->
+            <path d="{smooth_path}" fill="none" stroke="{color}" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- 底部渐变光影遮罩 -->
+            <path d="{smooth_path} L 120,25 L 0,25 Z" fill="url(#{grad_id})"/>
+            <!-- 扫描光栅 (跑马灯动效) -->
+            <line x1="0" y1="0" x2="0" y2="25" stroke="#FFFFFF" stroke-width="1" opacity="0.5">
+                <animate attributeName="x1" values="0; 120; 0" dur="3s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+                <animate attributeName="x2" values="0; 120; 0" dur="3s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+            </line>
         </g>
         """
 
@@ -365,25 +429,26 @@ def render_telemetry(data):
         make_bar(320, 90, 220, "COMMITS.YTD", present(real_data.get("commits")), 100, COLORS['purple'])
     ]
 
-    spark_shapes = [
-        "0,18 10,12 20,16 30,6 40,10 50,3 60,11 70,17 80,7 90,13 100,2",
-        "0,10 10,15 20,7 30,12 40,4 50,13 60,8 70,16 80,5 90,11 100,1",
-        "0,16 10,9 20,13 30,4 40,11 50,6 60,14 70,3 80,10 90,15 100,5",
-        "0,12 10,18 20,5 30,9 40,14 50,2 60,7 70,12 80,4 90,10 100,0",
-        "0,8 10,13 20,6 30,15 40,3 50,10 60,5 70,14 80,2 90,9 100,4",
+    smooth_paths = [
+        "M 0,15 Q 10,5 20,12 T 40,8 T 60,18 T 80,5 T 100,12 T 120,8",
+        "M 0,12 Q 10,18 20,10 T 40,16 T 60,6 T 80,14 T 100,4 T 120,10",
+        "M 0,17 Q 10,8 20,14 T 40,5 T 60,16 T 80,7 T 100,18 T 120,6",
+        "M 0,10 Q 10,16 20,7 T 40,14 T 60,3 T 80,11 T 100,6 T 120,13",
+        "M 0,14 Q 10,6 20,16 T 40,9 T 60,4 T 80,18 T 100,7 T 120,12",
     ]
-    spark_x = [40, 150, 260, 370, 480]
+    spark_x = [40, 170, 300, 430, 560]
     spark_colors = [COLORS['cyan'], COLORS['magenta'], COLORS['green'], COLORS['yellow'], COLORS['purple']]
+    spark_grads = ["grad-cyan", "grad-magenta", "grad-green", "grad-yellow", "grad-purple"]
     sparklines = [
-        make_sparkline(x, 170, color, pts)
-        for x, color, pts in zip(spark_x, spark_colors, spark_shapes)
+        make_sparkline(x, 170, color, grad, path)
+        for x, color, grad, path in zip(spark_x, spark_colors, spark_grads, smooth_paths)
     ]
 
     spark_label = f"""
     <text x="40" y="158" fill="{COLORS['dim']}" font-size="8" letter-spacing="1">ACTIVITY.SPARK // 30D</text>
-    <text x="580" y="158" fill="{COLORS['dim']}" font-size="8" letter-spacing="1" text-anchor="end">CH1..CH5</text>
+    <text x="680" y="158" fill="{COLORS['dim']}" font-size="8" letter-spacing="1" text-anchor="end">CH1..CH5</text>
     """
-    spark_baseline = f'<line x1="40" y1="195" x2="580" y2="195" stroke="{COLORS["stroke"]}" stroke-width="1"/>'
+    spark_baseline = f'<line x1="40" y1="195" x2="680" y2="195" stroke="{COLORS["stroke"]}" stroke-width="1"/>'
     bus_note = f'<text x="320" y="138" fill="{COLORS["dim"]}" font-size="8" letter-spacing="1">BUS.0x02 // SAMPLE 1Hz</text>'
 
     radar_scores = [0.95, 0.85, 0.70, 0.90, 0.60, 0.80]
@@ -398,25 +463,34 @@ def render_toolchain(data):
     # 工业图纸风格底纹 (十字对齐线 + 极小字号工程批号)
     bg = f"""
     <path d="M 24,20 L 34,20 M 24,20 L 24,30 M {WIDTH-24},20 L {WIDTH-34},20 M {WIDTH-24},20 L {WIDTH-24},30" fill="none" stroke="{COLORS['dim']}" stroke-width="1"/>
-    <text x="64" y="32" fill="{COLORS['dim']}" font-size="10" font-weight="bold" letter-spacing="2">SYS.ARCH // ORTHOGONAL PCB ROUTING</text>
+    <text x="64" y="40" fill="{COLORS['dim']}" font-size="10" font-weight="bold" letter-spacing="2">SYS.ARCH // ORTHOGONAL PCB ROUTING</text>
     <text x="{WIDTH-32}" y="40" fill="{COLORS['dim']}" font-size="8" text-anchor="end">JASMINE_SOC_REV_2.6</text>
-    <line x1="24" y1="44" x2="{WIDTH-24}" y2="44" stroke="{COLORS['stroke']}" stroke-width="1" stroke-dasharray="4 2"/>
+    <line x1="24" y1="48" x2="{WIDTH-24}" y2="48" stroke="{COLORS['stroke']}" stroke-width="1" stroke-dasharray="4 2"/>
     """
 
-    # 正交 45 度 PCB 走线
+    # 正交 45 度 PCB 走线 + 流动数据包
+    def make_trace(path_d, color, duration):
+        glow = "glow-cyan"
+        if color == COLORS['yellow']:
+            glow = "glow-yellow"
+        elif color == COLORS['magenta']:
+            glow = "glow-magenta"
+        return f"""
+        <g>
+            <path d="{path_d}" fill="none" stroke="{color}" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle r="2" fill="#FFFFFF" filter="url(#{glow})">
+                <animateMotion dur="{duration}s" repeatCount="indefinite" path="{path_d}"/>
+            </circle>
+        </g>
+        """
+
+    # 精准对齐方块边缘 (300/900) 与芯片边缘 (570/630)
     bus_lines = f"""
-    <!-- 连向 MCU (Cyan) -->
-    <path d="M 600,160 L 600,120 L 570,90 L 300,90" fill="none" stroke="{COLORS['cyan']}" stroke-width="2" stroke-dasharray="4 4">
-        <animate attributeName="stroke-dashoffset" from="16" to="0" dur="1s" repeatCount="indefinite"/>
-    </path>
-    <!-- 连向 PERIPHERALS (Yellow) -->
-    <path d="M 600,160 L 570,190 L 300,190" fill="none" stroke="{COLORS['yellow']}" stroke-width="2"/>
-    <!-- 连向 MOTION (Yellow) -->
-    <path d="M 600,160 L 600,270 L 580,290 L 300,290" fill="none" stroke="{COLORS['yellow']}" stroke-width="2"/>
-    <!-- 连向 AI_VISION (Magenta) -->
-    <path d="M 600,160 L 652.5,107.5 L 900,107.5" fill="none" stroke="{COLORS['magenta']}" stroke-width="2"/>
-    <!-- 连向 WEB (Green) -->
-    <path d="M 600,160 L 672.5,232.5 L 900,232.5" fill="none" stroke="{COLORS['green']}" stroke-width="2"/>
+    {make_trace('M 570,145 L 530,145 L 475,90 L 300,90', COLORS['cyan'], 1.2)}
+    {make_trace('M 570,160 L 530,160 L 500,190 L 300,190', COLORS['yellow'], 1.5)}
+    {make_trace('M 570,175 L 540,175 L 540,270 L 520,290 L 300,290', COLORS['yellow'], 1.8)}
+    {make_trace('M 630,145 L 670,145 L 707.5,107.5 L 900,107.5', COLORS['magenta'], 1.3)}
+    {make_trace('M 630,175 L 670,175 L 727.5,232.5 L 900,232.5', COLORS['green'], 1.6)}
     """
 
     # 中央主控 IC 芯片图示
@@ -469,7 +543,7 @@ def render_toolchain(data):
 # --- 区块 05: BUILDS ---
 def render_builds(data):
     h = 240
-    content = f'<text x="64" y="30" fill="{COLORS["dim"]}" font-size="12" font-weight="bold" letter-spacing="2">ACCESSING_RECORDS // BUILDS</text>'
+    content = f'<text x="64" y="40" fill="{COLORS["dim"]}" font-size="12" font-weight="bold" letter-spacing="2">ACCESSING_RECORDS // BUILDS</text>'
 
     def make_card(x, y, build):
         w = 360

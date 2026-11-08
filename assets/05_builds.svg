@@ -1,24 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 240" width="100%" height="100%" style="background-color:#04060D; font-family: 'JetBrains Mono', Consolas, 'Microsoft YaHei', sans-serif;">
     
     <defs>
+        <!-- 泛光滤镜 -->
         <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-yellow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <filter id="glow-magenta" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
+        <!-- 沉浸式渐变遮罩 (用于平滑折线图) -->
+        <linearGradient id="grad-cyan" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#22E1FF" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#22E1FF" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-magenta" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FF2FA8" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#FF2FA8" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-green" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#A8FF5E" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#A8FF5E" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-yellow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFC247" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#FFC247" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-purple" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8B5CFF" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#8B5CFF" stop-opacity="0.0"/>
+        </linearGradient>
+        
         <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
             <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.03" stroke-width="1"/>
         </pattern>
         <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.04" stroke-width="1"/>
-            <circle cx="40" cy="40" r="1" fill="#22E1FF" opacity="0.2"/>
+            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.03" stroke-width="1"/>
         </pattern>
         <!-- 十六进制内存流底纹 (双副本保证 300px 无缝滚动) -->
         <pattern id="hex-rain" width="300" height="300" patternUnits="userSpaceOnUse">
-            <g fill="#22E1FF" opacity="0.05" font-size="9" font-family="'JetBrains Mono', Consolas" letter-spacing="2">
+            <g fill="#22E1FF" opacity="0.04" font-size="9" font-family="'JetBrains Mono', Consolas" letter-spacing="2">
                 <text x="20" y="20">0x0800 0x1A2B 0x3C4D 0x5E6F</text>
                 <text x="80" y="80">0x2000 0xDEAD 0xBEEF 0x0000</text>
                 <text x="150" y="140">0x4002 0x8899 0xAABB 0xCCDD</text>
@@ -37,10 +63,25 @@
     <rect width="1200" height="240" fill="#04060D" />
     <!-- 巨型工业背景水印 -->
     <text x="600.0" y="220.0" fill="#FFFFFF" font-size="192.0" font-weight="900" font-family="Arial, Helvetica, sans-serif" opacity="0.02" text-anchor="middle" letter-spacing="-10">05</text>
-    <!-- Hex 内存流与极客网格 -->
+    
+    <!-- 全局微距网格与内存流 -->
     <rect width="1200" height="240" fill="url(#hex-rain)" />
     <rect width="1200" height="240" fill="url(#grid)" />
-    <text x="64" y="30" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="2">ACCESSING_RECORDS // BUILDS</text>
+    
+    <!-- 取景器物理边框 -->
+    <rect x="8" y="8" width="1184" height="224" fill="none" stroke="#1B2740" stroke-width="1.5"/>
+    <!-- 四角重装甲锁定框 -->
+    <path d="M 8,40 L 8,8 L 40,8 M 1160,8 L 1192,8 L 1192,40 M 8,200 L 8,232 L 40,232 M 1160,232 L 1192,232 L 1192,200" fill="none" stroke="#22E1FF" stroke-width="2.5" opacity="0.7"/>
+    
+    <!-- 顶部状态栏元数据 -->
+    <text x="18" y="22" fill="#6F84A6" font-size="9" letter-spacing="1">SYS.MNTR // LIVE FEED</text>
+    <circle cx="1155" cy="18" r="3.5" fill="#FF2FA8">
+        <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="1165" y="22" fill="#FF2FA8" font-size="9" font-weight="bold" letter-spacing="1">REC</text>
+    <text x="1135" y="22" fill="#6F84A6" font-size="9" text-anchor="end">UPLINK_ESTABLISHED</text>
+    
+    <text x="64" y="40" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="2">ACCESSING_RECORDS // BUILDS</text>
         <g transform="translate(20.0, 50)">
             <rect x="0" y="0" width="360" height="160" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
 
@@ -156,12 +197,4 @@
         </g>
         
     <rect width="1200" height="240" fill="url(#scanlines)" pointer-events="none" />
-    
-    <!-- HUD Corners -->
-    <path d="M 14,0 L 0,0 L 0,14 M 1186,0 L 1200,0 L 1200,14 M 1186,240 L 1200,240 L 1200,226 M 14,240 L 0,240 L 0,226" fill="none" stroke="#1B2740" stroke-width="2" />
-    <!-- Calibration Crosshairs -->
-    <path d="M 40,24 L 48,24 M 44,20 L 44,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
-    <path d="M 1152,24 L 1160,24 M 1156,20 L 1156,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
-    <path d="M 40,216 L 48,216 M 44,212 L 44,220" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
-    <path d="M 1152,216 L 1160,216 M 1156,212 L 1156,220" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
     </svg>

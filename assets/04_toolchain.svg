@@ -1,24 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="100%" height="100%" style="background-color:#04060D; font-family: 'JetBrains Mono', Consolas, 'Microsoft YaHei', sans-serif;">
     
     <defs>
+        <!-- 泛光滤镜 -->
         <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-yellow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <filter id="glow-magenta" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
+        <!-- 沉浸式渐变遮罩 (用于平滑折线图) -->
+        <linearGradient id="grad-cyan" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#22E1FF" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#22E1FF" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-magenta" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FF2FA8" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#FF2FA8" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-green" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#A8FF5E" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#A8FF5E" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-yellow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFC247" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#FFC247" stop-opacity="0.0"/>
+        </linearGradient>
+        <linearGradient id="grad-purple" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8B5CFF" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#8B5CFF" stop-opacity="0.0"/>
+        </linearGradient>
+        
         <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
             <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.03" stroke-width="1"/>
         </pattern>
         <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.04" stroke-width="1"/>
-            <circle cx="40" cy="40" r="1" fill="#22E1FF" opacity="0.2"/>
+            <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.03" stroke-width="1"/>
         </pattern>
         <!-- 十六进制内存流底纹 (双副本保证 300px 无缝滚动) -->
         <pattern id="hex-rain" width="300" height="300" patternUnits="userSpaceOnUse">
-            <g fill="#22E1FF" opacity="0.05" font-size="9" font-family="'JetBrains Mono', Consolas" letter-spacing="2">
+            <g fill="#22E1FF" opacity="0.04" font-size="9" font-family="'JetBrains Mono', Consolas" letter-spacing="2">
                 <text x="20" y="20">0x0800 0x1A2B 0x3C4D 0x5E6F</text>
                 <text x="80" y="80">0x2000 0xDEAD 0xBEEF 0x0000</text>
                 <text x="150" y="140">0x4002 0x8899 0xAABB 0xCCDD</text>
@@ -37,27 +63,70 @@
     <rect width="1200" height="340" fill="#04060D" />
     <!-- 巨型工业背景水印 -->
     <text x="600.0" y="270.0" fill="#FFFFFF" font-size="272.0" font-weight="900" font-family="Arial, Helvetica, sans-serif" opacity="0.02" text-anchor="middle" letter-spacing="-10">04</text>
-    <!-- Hex 内存流与极客网格 -->
+    
+    <!-- 全局微距网格与内存流 -->
     <rect width="1200" height="340" fill="url(#hex-rain)" />
     <rect width="1200" height="340" fill="url(#grid)" />
     
-    <path d="M 24,20 L 34,20 M 24,20 L 24,30 M 1176,20 L 1166,20 M 1176,20 L 1176,30" fill="none" stroke="#6F84A6" stroke-width="1"/>
-    <text x="64" y="32" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="2">SYS.ARCH // ORTHOGONAL PCB ROUTING</text>
-    <text x="1168" y="40" fill="#6F84A6" font-size="8" text-anchor="end">JASMINE_SOC_REV_2.6</text>
-    <line x1="24" y1="44" x2="1176" y2="44" stroke="#1B2740" stroke-width="1" stroke-dasharray="4 2"/>
+    <!-- 取景器物理边框 -->
+    <rect x="8" y="8" width="1184" height="324" fill="none" stroke="#1B2740" stroke-width="1.5"/>
+    <!-- 四角重装甲锁定框 -->
+    <path d="M 8,40 L 8,8 L 40,8 M 1160,8 L 1192,8 L 1192,40 M 8,300 L 8,332 L 40,332 M 1160,332 L 1192,332 L 1192,300" fill="none" stroke="#22E1FF" stroke-width="2.5" opacity="0.7"/>
     
-    <!-- 连向 MCU (Cyan) -->
-    <path d="M 600,160 L 600,120 L 570,90 L 300,90" fill="none" stroke="#22E1FF" stroke-width="2" stroke-dasharray="4 4">
-        <animate attributeName="stroke-dashoffset" from="16" to="0" dur="1s" repeatCount="indefinite"/>
-    </path>
-    <!-- 连向 PERIPHERALS (Yellow) -->
-    <path d="M 600,160 L 570,190 L 300,190" fill="none" stroke="#FFC247" stroke-width="2"/>
-    <!-- 连向 MOTION (Yellow) -->
-    <path d="M 600,160 L 600,270 L 580,290 L 300,290" fill="none" stroke="#FFC247" stroke-width="2"/>
-    <!-- 连向 AI_VISION (Magenta) -->
-    <path d="M 600,160 L 652.5,107.5 L 900,107.5" fill="none" stroke="#FF2FA8" stroke-width="2"/>
-    <!-- 连向 WEB (Green) -->
-    <path d="M 600,160 L 672.5,232.5 L 900,232.5" fill="none" stroke="#A8FF5E" stroke-width="2"/>
+    <!-- 顶部状态栏元数据 -->
+    <text x="18" y="22" fill="#6F84A6" font-size="9" letter-spacing="1">SYS.MNTR // LIVE FEED</text>
+    <circle cx="1155" cy="18" r="3.5" fill="#FF2FA8">
+        <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="1165" y="22" fill="#FF2FA8" font-size="9" font-weight="bold" letter-spacing="1">REC</text>
+    <text x="1135" y="22" fill="#6F84A6" font-size="9" text-anchor="end">UPLINK_ESTABLISHED</text>
+    
+    
+    <path d="M 24,20 L 34,20 M 24,20 L 24,30 M 1176,20 L 1166,20 M 1176,20 L 1176,30" fill="none" stroke="#6F84A6" stroke-width="1"/>
+    <text x="64" y="40" fill="#6F84A6" font-size="10" font-weight="bold" letter-spacing="2">SYS.ARCH // ORTHOGONAL PCB ROUTING</text>
+    <text x="1168" y="40" fill="#6F84A6" font-size="8" text-anchor="end">JASMINE_SOC_REV_2.6</text>
+    <line x1="24" y1="48" x2="1176" y2="48" stroke="#1B2740" stroke-width="1" stroke-dasharray="4 2"/>
+    
+    
+        <g>
+            <path d="M 570,145 L 530,145 L 475,90 L 300,90" fill="none" stroke="#22E1FF" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle r="2" fill="#FFFFFF" filter="url(#glow-cyan)">
+                <animateMotion dur="1.2s" repeatCount="indefinite" path="M 570,145 L 530,145 L 475,90 L 300,90"/>
+            </circle>
+        </g>
+        
+    
+        <g>
+            <path d="M 570,160 L 530,160 L 500,190 L 300,190" fill="none" stroke="#FFC247" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle r="2" fill="#FFFFFF" filter="url(#glow-yellow)">
+                <animateMotion dur="1.5s" repeatCount="indefinite" path="M 570,160 L 530,160 L 500,190 L 300,190"/>
+            </circle>
+        </g>
+        
+    
+        <g>
+            <path d="M 570,175 L 540,175 L 540,270 L 520,290 L 300,290" fill="none" stroke="#FFC247" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle r="2" fill="#FFFFFF" filter="url(#glow-yellow)">
+                <animateMotion dur="1.8s" repeatCount="indefinite" path="M 570,175 L 540,175 L 540,270 L 520,290 L 300,290"/>
+            </circle>
+        </g>
+        
+    
+        <g>
+            <path d="M 630,145 L 670,145 L 707.5,107.5 L 900,107.5" fill="none" stroke="#FF2FA8" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle r="2" fill="#FFFFFF" filter="url(#glow-magenta)">
+                <animateMotion dur="1.3s" repeatCount="indefinite" path="M 630,145 L 670,145 L 707.5,107.5 L 900,107.5"/>
+            </circle>
+        </g>
+        
+    
+        <g>
+            <path d="M 630,175 L 670,175 L 727.5,232.5 L 900,232.5" fill="none" stroke="#A8FF5E" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle r="2" fill="#FFFFFF" filter="url(#glow-cyan)">
+                <animateMotion dur="1.6s" repeatCount="indefinite" path="M 630,175 L 670,175 L 727.5,232.5 L 900,232.5"/>
+            </circle>
+        </g>
+        
     
     <g>
         <line x1="575" y1="135" x2="575" y2="140" stroke="#6F84A6" stroke-width="1.5"/><line x1="575" y1="180" x2="575" y2="185" stroke="#6F84A6" stroke-width="1.5"/><line x1="565" y1="145.0" x2="570" y2="145.0" stroke="#6F84A6" stroke-width="1.5"/><line x1="630" y1="145.0" x2="635" y2="145.0" stroke="#6F84A6" stroke-width="1.5"/><line x1="580" y1="135" x2="580" y2="140" stroke="#6F84A6" stroke-width="1.5"/><line x1="580" y1="180" x2="580" y2="185" stroke="#6F84A6" stroke-width="1.5"/><line x1="565" y1="148.5" x2="570" y2="148.5" stroke="#6F84A6" stroke-width="1.5"/><line x1="630" y1="148.5" x2="635" y2="148.5" stroke="#6F84A6" stroke-width="1.5"/><line x1="585" y1="135" x2="585" y2="140" stroke="#6F84A6" stroke-width="1.5"/><line x1="585" y1="180" x2="585" y2="185" stroke="#6F84A6" stroke-width="1.5"/><line x1="565" y1="152.0" x2="570" y2="152.0" stroke="#6F84A6" stroke-width="1.5"/><line x1="630" y1="152.0" x2="635" y2="152.0" stroke="#6F84A6" stroke-width="1.5"/><line x1="590" y1="135" x2="590" y2="140" stroke="#6F84A6" stroke-width="1.5"/><line x1="590" y1="180" x2="590" y2="185" stroke="#6F84A6" stroke-width="1.5"/><line x1="565" y1="155.5" x2="570" y2="155.5" stroke="#6F84A6" stroke-width="1.5"/><line x1="630" y1="155.5" x2="635" y2="155.5" stroke="#6F84A6" stroke-width="1.5"/><line x1="595" y1="135" x2="595" y2="140" stroke="#6F84A6" stroke-width="1.5"/><line x1="595" y1="180" x2="595" y2="185" stroke="#6F84A6" stroke-width="1.5"/><line x1="565" y1="159.0" x2="570" y2="159.0" stroke="#6F84A6" stroke-width="1.5"/><line x1="630" y1="159.0" x2="635" y2="159.0" stroke="#6F84A6" stroke-width="1.5"/><line x1="600" y1="135" x2="600" y2="140" stroke="#6F84A6" stroke-width="1.5"/><line x1="600" y1="180" x2="600" y2="185" stroke="#6F84A6" stroke-width="1.5"/><line x1="565" y1="162.5" x2="570" y2="162.5" stroke="#6F84A6" stroke-width="1.5"/><line x1="630" y1="162.5" x2="635" y2="162.5" stroke="#6F84A6" stroke-width="1.5"/><line x1="605" y1="135" x2="605" y2="140" stroke="#6F84A6" stroke-width="1.5"/><line x1="605" y1="180" x2="605" y2="185" stroke="#6F84A6" stroke-width="1.5"/><line x1="565" y1="166.0" x2="570" y2="166.0" stroke="#6F84A6" stroke-width="1.5"/><line x1="630" y1="166.0" x2="635" y2="166.0" stroke="#6F84A6" stroke-width="1.5"/><line x1="610" y1="135" x2="610" y2="140" stroke="#6F84A6" stroke-width="1.5"/><line x1="610" y1="180" x2="610" y2="185" stroke="#6F84A6" stroke-width="1.5"/><line x1="565" y1="169.5" x2="570" y2="169.5" stroke="#6F84A6" stroke-width="1.5"/><line x1="630" y1="169.5" x2="635" y2="169.5" stroke="#6F84A6" stroke-width="1.5"/><line x1="615" y1="135" x2="615" y2="140" stroke="#6F84A6" stroke-width="1.5"/><line x1="615" y1="180" x2="615" y2="185" stroke="#6F84A6" stroke-width="1.5"/><line x1="565" y1="173.0" x2="570" y2="173.0" stroke="#6F84A6" stroke-width="1.5"/><line x1="630" y1="173.0" x2="635" y2="173.0" stroke="#6F84A6" stroke-width="1.5"/><line x1="620" y1="135" x2="620" y2="140" stroke="#6F84A6" stroke-width="1.5"/><line x1="620" y1="180" x2="620" y2="185" stroke="#6F84A6" stroke-width="1.5"/><line x1="565" y1="176.5" x2="570" y2="176.5" stroke="#6F84A6" stroke-width="1.5"/><line x1="630" y1="176.5" x2="635" y2="176.5" stroke="#6F84A6" stroke-width="1.5"/>
@@ -118,12 +187,4 @@
         </g>
         
     <rect width="1200" height="340" fill="url(#scanlines)" pointer-events="none" />
-    
-    <!-- HUD Corners -->
-    <path d="M 14,0 L 0,0 L 0,14 M 1186,0 L 1200,0 L 1200,14 M 1186,340 L 1200,340 L 1200,326 M 14,340 L 0,340 L 0,326" fill="none" stroke="#1B2740" stroke-width="2" />
-    <!-- Calibration Crosshairs -->
-    <path d="M 40,24 L 48,24 M 44,20 L 44,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
-    <path d="M 1152,24 L 1160,24 M 1156,20 L 1156,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
-    <path d="M 40,316 L 48,316 M 44,312 L 44,320" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
-    <path d="M 1152,316 L 1160,316 M 1156,312 L 1156,320" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
     </svg>
