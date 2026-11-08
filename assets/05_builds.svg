@@ -10,115 +10,149 @@
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1"/>
+            <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.03" stroke-width="1"/>
         </pattern>
         <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
             <rect width="40" height="40" fill="none" stroke="#22E1FF" stroke-opacity="0.04" stroke-width="1"/>
+            <circle cx="40" cy="40" r="1" fill="#22E1FF" opacity="0.2"/>
+        </pattern>
+        <!-- 十六进制内存流底纹 (双副本保证 300px 无缝滚动) -->
+        <pattern id="hex-rain" width="300" height="300" patternUnits="userSpaceOnUse">
+            <g fill="#22E1FF" opacity="0.05" font-size="9" font-family="'JetBrains Mono', Consolas" letter-spacing="2">
+                <text x="20" y="20">0x0800 0x1A2B 0x3C4D 0x5E6F</text>
+                <text x="80" y="80">0x2000 0xDEAD 0xBEEF 0x0000</text>
+                <text x="150" y="140">0x4002 0x8899 0xAABB 0xCCDD</text>
+                <text x="40" y="220">0x8000 0x1122 0x3344 0x5566</text>
+                <text x="200" y="280">0x0000 0xFFFF 0x0000 0xFFFF</text>
+                <text x="20" y="-280">0x0800 0x1A2B 0x3C4D 0x5E6F</text>
+                <text x="80" y="-220">0x2000 0xDEAD 0xBEEF 0x0000</text>
+                <text x="150" y="-160">0x4002 0x8899 0xAABB 0xCCDD</text>
+                <text x="40" y="-80">0x8000 0x1122 0x3344 0x5566</text>
+                <text x="200" y="-20">0x0000 0xFFFF 0x0000 0xFFFF</text>
+                <animateTransform attributeName="transform" type="translate" from="0,0" to="0,300" dur="20s" repeatCount="indefinite"/>
+            </g>
         </pattern>
     </defs>
     
     <rect width="1200" height="240" fill="#04060D" />
     <!-- 巨型工业背景水印 -->
     <text x="600.0" y="220.0" fill="#FFFFFF" font-size="192.0" font-weight="900" font-family="Arial, Helvetica, sans-serif" opacity="0.02" text-anchor="middle" letter-spacing="-10">05</text>
+    <!-- Hex 内存流与极客网格 -->
+    <rect width="1200" height="240" fill="url(#hex-rain)" />
     <rect width="1200" height="240" fill="url(#grid)" />
     <text x="64" y="30" fill="#6F84A6" font-size="12" font-weight="bold" letter-spacing="2">ACCESSING_RECORDS // BUILDS</text>
-        <g transform="translate(20.0, 70)">
-            <!-- 卡片底板 -->
-            <rect x="0" y="0" width="360" height="150" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
-            
-            <!-- 瞄准器边角 (HUD) -->
+        <g transform="translate(20.0, 50)">
+            <rect x="0" y="0" width="360" height="160" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
+
             <path d="M -5,-5 L 10,-5 M -5,-5 L -5,10" fill="none" stroke="#22E1FF" stroke-width="2"/>
             <path d="M 365,-5 L 350,-5 M 365,-5 L 365,10" fill="none" stroke="#22E1FF" stroke-width="2"/>
-            <path d="M -5,155 L 10,155 M -5,155 L -5,140" fill="none" stroke="#22E1FF" stroke-width="2"/>
-            <path d="M 365,155 L 350,155 M 365,155 L 365,140" fill="none" stroke="#22E1FF" stroke-width="2"/>
+            <path d="M -5,165 L 10,165 M -5,165 L -5,150" fill="none" stroke="#22E1FF" stroke-width="2"/>
+            <path d="M 365,165 L 350,165 M 365,165 L 365,150" fill="none" stroke="#22E1FF" stroke-width="2"/>
 
-            <!-- 顶部装饰带 -->
-            <rect x="0" y="0" width="360" height="4" fill="#8B5CFF"/>
-            
-            <!-- 编号与语言标签 -->
-            <text x="16" y="30" fill="#FFC247" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="700">[01]</text>
-            <text x="60" y="28" fill="#6F84A6" font-size="12" font-weight="bold">C++ / ROS2</text>
-            
-            <!-- 呼吸状态点 -->
-            <circle cx="340" cy="24" r="4" fill="#A8FF5E">
-                <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
-            </circle>
-
-            <!-- 项目代号 -->
-            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="700" letter-spacing="1">LASER-CANNON</text>
-            
-            <!-- 中文描述 (分两行) -->
-            <text x="16" y="95" fill="#22E1FF" font-size="14">基于 STM32 的双舵机蓝牙激光炮台控制系统</text>
-            <text x="16" y="115" fill="#22E1FF" font-size="14">采用 180° 舵机及 360° 连续舵机构建双自由度</text>
-            
-            <!-- 底部装饰线索 -->
-            <line x1="16" y1="135" x2="344" y2="135" stroke="#1B2740" stroke-width="1" stroke-dasharray="2 2"/>
+            <clipPath id="clip-01">
+                <rect x="0" y="0" width="360" height="160" />
+            </clipPath>
+            <g clip-path="url(#clip-01)">
+                
+        <g opacity="0.7">
+            <rect x="0" y="0" width="360" height="40" fill="#22E1FF" fill-opacity="0.12" filter="url(#glow-cyan)">
+                <animate attributeName="y" values="0; 120; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+            </rect>
+            <line x1="0" y1="0" x2="360" y2="0" stroke="#22E1FF" stroke-width="2" filter="url(#glow-cyan)">
+                <animate attributeName="y1" values="0; 160; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+                <animate attributeName="y2" values="0; 160; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+            </line>
         </g>
         
-        <g transform="translate(420.0, 70)">
-            <!-- 卡片底板 -->
-            <rect x="0" y="0" width="360" height="150" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
-            
-            <!-- 瞄准器边角 (HUD) -->
-            <path d="M -5,-5 L 10,-5 M -5,-5 L -5,10" fill="none" stroke="#22E1FF" stroke-width="2"/>
-            <path d="M 365,-5 L 350,-5 M 365,-5 L 365,10" fill="none" stroke="#22E1FF" stroke-width="2"/>
-            <path d="M -5,155 L 10,155 M -5,155 L -5,140" fill="none" stroke="#22E1FF" stroke-width="2"/>
-            <path d="M 365,155 L 350,155 M 365,155 L 365,140" fill="none" stroke="#22E1FF" stroke-width="2"/>
+            </g>
 
-            <!-- 顶部装饰带 -->
             <rect x="0" y="0" width="360" height="4" fill="#8B5CFF"/>
-            
-            <!-- 编号与语言标签 -->
-            <text x="16" y="30" fill="#FFC247" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="700">[02]</text>
-            <text x="60" y="28" fill="#6F84A6" font-size="12" font-weight="bold">C / STM32</text>
-            
-            <!-- 呼吸状态点 -->
+            <text x="16" y="35" fill="#FFC247" font-size="20" font-family="'JetBrains Mono', Consolas" font-weight="900">[01]</text>
+            <text x="70" y="32" fill="#6F84A6" font-size="10" font-weight="bold">C++ / ROS2</text>
             <circle cx="340" cy="24" r="4" fill="#A8FF5E">
-                <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="1;0.2;1" dur="2.5s" repeatCount="indefinite"/>
             </circle>
 
-            <!-- 项目代号 -->
-            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="700" letter-spacing="1">STEPPER-57</text>
-            
-            <!-- 中文描述 (分两行) -->
-            <text x="16" y="95" fill="#22E1FF" font-size="14">STM32F103C8T6 闭环 57 步电机的从 0 到 1</text>
-            <text x="16" y="115" fill="#22E1FF" font-size="14">包含位置环与速度环 PID 调参实现</text>
-            
-            <!-- 底部装饰线索 -->
-            <line x1="16" y1="135" x2="344" y2="135" stroke="#1B2740" stroke-width="1" stroke-dasharray="2 2"/>
+            <text x="16" y="75" fill="#FFFFFF" font-size="22" font-weight="900" letter-spacing="1">LASER-CANNON</text>
+            <text x="16" y="105" fill="#22E1FF" font-size="13">基于 STM32 的双舵机蓝牙激光炮台控制系统</text>
+            <text x="16" y="130" fill="#22E1FF" font-size="13">采用 180° 舵机及 360° 连续舵机构建双自由度</text>
+            <line x1="16" y1="145" x2="344" y2="145" stroke="#1B2740" stroke-width="1" stroke-dasharray="2 2"/>
         </g>
         
-        <g transform="translate(820.0, 70)">
-            <!-- 卡片底板 -->
-            <rect x="0" y="0" width="360" height="150" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
-            
-            <!-- 瞄准器边角 (HUD) -->
+        <g transform="translate(420.0, 50)">
+            <rect x="0" y="0" width="360" height="160" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
+
             <path d="M -5,-5 L 10,-5 M -5,-5 L -5,10" fill="none" stroke="#22E1FF" stroke-width="2"/>
             <path d="M 365,-5 L 350,-5 M 365,-5 L 365,10" fill="none" stroke="#22E1FF" stroke-width="2"/>
-            <path d="M -5,155 L 10,155 M -5,155 L -5,140" fill="none" stroke="#22E1FF" stroke-width="2"/>
-            <path d="M 365,155 L 350,155 M 365,155 L 365,140" fill="none" stroke="#22E1FF" stroke-width="2"/>
+            <path d="M -5,165 L 10,165 M -5,165 L -5,150" fill="none" stroke="#22E1FF" stroke-width="2"/>
+            <path d="M 365,165 L 350,165 M 365,165 L 365,150" fill="none" stroke="#22E1FF" stroke-width="2"/>
 
-            <!-- 顶部装饰带 -->
+            <clipPath id="clip-02">
+                <rect x="0" y="0" width="360" height="160" />
+            </clipPath>
+            <g clip-path="url(#clip-02)">
+                
+        <g opacity="0.7">
+            <rect x="0" y="0" width="360" height="40" fill="#22E1FF" fill-opacity="0.12" filter="url(#glow-cyan)">
+                <animate attributeName="y" values="0; 120; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+            </rect>
+            <line x1="0" y1="0" x2="360" y2="0" stroke="#22E1FF" stroke-width="2" filter="url(#glow-cyan)">
+                <animate attributeName="y1" values="0; 160; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+                <animate attributeName="y2" values="0; 160; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+            </line>
+        </g>
+        
+            </g>
+
             <rect x="0" y="0" width="360" height="4" fill="#8B5CFF"/>
-            
-            <!-- 编号与语言标签 -->
-            <text x="16" y="30" fill="#FFC247" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="700">[03]</text>
-            <text x="60" y="28" fill="#6F84A6" font-size="12" font-weight="bold">PYTHON</text>
-            
-            <!-- 呼吸状态点 -->
+            <text x="16" y="35" fill="#FFC247" font-size="20" font-family="'JetBrains Mono', Consolas" font-weight="900">[02]</text>
+            <text x="70" y="32" fill="#6F84A6" font-size="10" font-weight="bold">C / STM32</text>
             <circle cx="340" cy="24" r="4" fill="#A8FF5E">
-                <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="1;0.2;1" dur="3.0s" repeatCount="indefinite"/>
             </circle>
 
-            <!-- 项目代号 -->
-            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="700" letter-spacing="1">VIBE-AWARDS</text>
-            
-            <!-- 中文描述 (分两行) -->
-            <text x="16" y="95" fill="#22E1FF" font-size="14">基于视觉大模型的视频解析与二次创作</text>
-            <text x="16" y="115" fill="#22E1FF" font-size="14">集成自动化剪辑与弹幕渲染模块</text>
-            
-            <!-- 底部装饰线索 -->
-            <line x1="16" y1="135" x2="344" y2="135" stroke="#1B2740" stroke-width="1" stroke-dasharray="2 2"/>
+            <text x="16" y="75" fill="#FFFFFF" font-size="22" font-weight="900" letter-spacing="1">STEPPER-57</text>
+            <text x="16" y="105" fill="#22E1FF" font-size="13">STM32F103C8T6 闭环 57 步电机的从 0 到 1</text>
+            <text x="16" y="130" fill="#22E1FF" font-size="13">包含位置环与速度环 PID 调参实现</text>
+            <line x1="16" y1="145" x2="344" y2="145" stroke="#1B2740" stroke-width="1" stroke-dasharray="2 2"/>
+        </g>
+        
+        <g transform="translate(820.0, 50)">
+            <rect x="0" y="0" width="360" height="160" fill="#0A0F1A" stroke="#1B2740" stroke-width="1"/>
+
+            <path d="M -5,-5 L 10,-5 M -5,-5 L -5,10" fill="none" stroke="#22E1FF" stroke-width="2"/>
+            <path d="M 365,-5 L 350,-5 M 365,-5 L 365,10" fill="none" stroke="#22E1FF" stroke-width="2"/>
+            <path d="M -5,165 L 10,165 M -5,165 L -5,150" fill="none" stroke="#22E1FF" stroke-width="2"/>
+            <path d="M 365,165 L 350,165 M 365,165 L 365,150" fill="none" stroke="#22E1FF" stroke-width="2"/>
+
+            <clipPath id="clip-03">
+                <rect x="0" y="0" width="360" height="160" />
+            </clipPath>
+            <g clip-path="url(#clip-03)">
+                
+        <g opacity="0.7">
+            <rect x="0" y="0" width="360" height="40" fill="#22E1FF" fill-opacity="0.12" filter="url(#glow-cyan)">
+                <animate attributeName="y" values="0; 120; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+            </rect>
+            <line x1="0" y1="0" x2="360" y2="0" stroke="#22E1FF" stroke-width="2" filter="url(#glow-cyan)">
+                <animate attributeName="y1" values="0; 160; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+                <animate attributeName="y2" values="0; 160; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+            </line>
+        </g>
+        
+            </g>
+
+            <rect x="0" y="0" width="360" height="4" fill="#8B5CFF"/>
+            <text x="16" y="35" fill="#FFC247" font-size="20" font-family="'JetBrains Mono', Consolas" font-weight="900">[03]</text>
+            <text x="70" y="32" fill="#6F84A6" font-size="10" font-weight="bold">PYTHON</text>
+            <circle cx="340" cy="24" r="4" fill="#A8FF5E">
+                <animate attributeName="opacity" values="1;0.2;1" dur="3.5s" repeatCount="indefinite"/>
+            </circle>
+
+            <text x="16" y="75" fill="#FFFFFF" font-size="22" font-weight="900" letter-spacing="1">VIBE-AWARDS</text>
+            <text x="16" y="105" fill="#22E1FF" font-size="13">基于视觉大模型的视频解析与二次创作</text>
+            <text x="16" y="130" fill="#22E1FF" font-size="13">集成自动化剪辑与弹幕渲染模块</text>
+            <line x1="16" y1="145" x2="344" y2="145" stroke="#1B2740" stroke-width="1" stroke-dasharray="2 2"/>
         </g>
         
     <rect width="1200" height="240" fill="url(#scanlines)" pointer-events="none" />
@@ -128,6 +162,6 @@
     <!-- Calibration Crosshairs -->
     <path d="M 40,24 L 48,24 M 44,20 L 44,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
     <path d="M 1152,24 L 1160,24 M 1156,20 L 1156,28" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
-    <path d="M 40,228 L 48,228 M 44,224 L 44,232" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
-    <path d="M 1152,228 L 1160,228 M 1156,224 L 1156,232" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 40,216 L 48,216 M 44,212 L 44,220" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
+    <path d="M 1152,216 L 1160,216 M 1156,212 L 1156,220" fill="none" stroke="#6F84A6" stroke-width="1.5"/>
     </svg>

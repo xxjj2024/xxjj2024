@@ -26,10 +26,27 @@ def svg_base(height, content, watermark="00"):
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1"/>
+            <line x1="0" y1="0" x2="4" y2="0" stroke="#FFFFFF" stroke-opacity="0.03" stroke-width="1"/>
         </pattern>
         <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
             <rect width="40" height="40" fill="none" stroke="{COLORS['cyan']}" stroke-opacity="0.04" stroke-width="1"/>
+            <circle cx="40" cy="40" r="1" fill="{COLORS['cyan']}" opacity="0.2"/>
+        </pattern>
+        <!-- 十六进制内存流底纹 (双副本保证 300px 无缝滚动) -->
+        <pattern id="hex-rain" width="300" height="300" patternUnits="userSpaceOnUse">
+            <g fill="{COLORS['cyan']}" opacity="0.05" font-size="9" font-family="'JetBrains Mono', Consolas" letter-spacing="2">
+                <text x="20" y="20">0x0800 0x1A2B 0x3C4D 0x5E6F</text>
+                <text x="80" y="80">0x2000 0xDEAD 0xBEEF 0x0000</text>
+                <text x="150" y="140">0x4002 0x8899 0xAABB 0xCCDD</text>
+                <text x="40" y="220">0x8000 0x1122 0x3344 0x5566</text>
+                <text x="200" y="280">0x0000 0xFFFF 0x0000 0xFFFF</text>
+                <text x="20" y="-280">0x0800 0x1A2B 0x3C4D 0x5E6F</text>
+                <text x="80" y="-220">0x2000 0xDEAD 0xBEEF 0x0000</text>
+                <text x="150" y="-160">0x4002 0x8899 0xAABB 0xCCDD</text>
+                <text x="40" y="-80">0x8000 0x1122 0x3344 0x5566</text>
+                <text x="200" y="-20">0x0000 0xFFFF 0x0000 0xFFFF</text>
+                <animateTransform attributeName="transform" type="translate" from="0,0" to="0,300" dur="20s" repeatCount="indefinite"/>
+            </g>
         </pattern>
     </defs>
     """
@@ -39,6 +56,8 @@ def svg_base(height, content, watermark="00"):
     <rect width="{WIDTH}" height="{height}" fill="{COLORS['bg']}" />
     <!-- 巨型工业背景水印 -->
     <text x="{WIDTH/2}" y="{height/2 + 100}" fill="#FFFFFF" font-size="{height * 0.8}" font-weight="900" font-family="Arial, Helvetica, sans-serif" opacity="0.02" text-anchor="middle" letter-spacing="-10">{watermark}</text>
+    <!-- Hex 内存流与极客网格 -->
+    <rect width="{WIDTH}" height="{height}" fill="url(#hex-rain)" />
     <rect width="{WIDTH}" height="{height}" fill="url(#grid)" />
     {content}
     <rect width="{WIDTH}" height="{height}" fill="url(#scanlines)" pointer-events="none" />
@@ -48,8 +67,8 @@ def svg_base(height, content, watermark="00"):
     <!-- Calibration Crosshairs -->
     <path d="M 40,24 L 48,24 M 44,20 L 44,28" fill="none" stroke="{COLORS['dim']}" stroke-width="1.5"/>
     <path d="M {WIDTH-48},24 L {WIDTH-40},24 M {WIDTH-44},20 L {WIDTH-44},28" fill="none" stroke="{COLORS['dim']}" stroke-width="1.5"/>
-    <path d="M 40,{height-12} L 48,{height-12} M 44,{height-16} L 44,{height-8}" fill="none" stroke="{COLORS['dim']}" stroke-width="1.5"/>
-    <path d="M {WIDTH-48},{height-12} L {WIDTH-40},{height-12} M {WIDTH-44},{height-16} L {WIDTH-44},{height-8}" fill="none" stroke="{COLORS['dim']}" stroke-width="1.5"/>
+    <path d="M 40,{height-24} L 48,{height-24} M 44,{height-28} L 44,{height-20}" fill="none" stroke="{COLORS['dim']}" stroke-width="1.5"/>
+    <path d="M {WIDTH-48},{height-24} L {WIDTH-40},{height-24} M {WIDTH-44},{height-28} L {WIDTH-44},{height-20}" fill="none" stroke="{COLORS['dim']}" stroke-width="1.5"/>
     </svg>"""
 
 # --- 区块 01: HERO ---
@@ -94,57 +113,58 @@ def render_hero(data):
     </g>
     """
 
-    # 高级动效：干涉波阵列 (Interference Waves)
-    waveforms = f"""
-    <g transform="translate(0, 420)">
-        <line x1="24" y1="0" x2="{WIDTH-400}" y2="0" stroke="{COLORS['yellow']}" stroke-width="1" stroke-dasharray="2 4" />
-        <text x="32" y="-8" fill="{COLORS['yellow']}" font-size="10" letter-spacing="1">PHASE.SYNC // LISSAJOUS RESONANCE</text>
+    # 高级动效：全息三维线框球体 (Holographic Core)
+    core = f"""
+    <g transform="translate({WIDTH/2}, 420)">
+        <text x="0" y="-100" fill="{COLORS['cyan']}" font-size="10" font-weight="bold" letter-spacing="4" text-anchor="middle">QUANTUM CORE // SPATIAL PERCEPTION</text>
+        <line x1="-120" y1="-96" x2="120" y2="-96" stroke="{COLORS['stroke']}" stroke-width="1"/>
         
-        <!-- 主载波 (Cyan) -->
+        <!-- 外围光晕脉冲 -->
+        <circle cx="0" cy="0" r="75" fill="none" stroke="{COLORS['cyan']}" stroke-width="1" opacity="0.2">
+            <animate attributeName="r" values="75; 85; 75" dur="4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.2; 0; 0.2" dur="4s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- 3D 铁线框球体视错觉 -->
         <g stroke="{COLORS['cyan']}" stroke-width="1.5" fill="none" filter="url(#glow-cyan)">
-            <path d="M0,0 Q50,-50 100,0 T200,0 T300,0 T400,0 T500,0 T600,0 T700,0 T800,0 T900,0 T1000,0">
-                <animateTransform attributeName="transform" type="translate" from="0,0" to="-200,0" dur="4s" repeatCount="indefinite" />
-            </path>
+            <ellipse cx="0" cy="0" rx="70" ry="20" opacity="0.6">
+                <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="8s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="0" cy="0" rx="70" ry="20" opacity="0.8">
+                <animateTransform attributeName="transform" type="rotate" from="60" to="420" dur="8s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="0" cy="0" rx="70" ry="20" opacity="0.4">
+                <animateTransform attributeName="transform" type="rotate" from="120" to="480" dur="8s" repeatCount="indefinite"/>
+            </ellipse>
         </g>
-        <!-- 副频波 (Magenta, 逆向) -->
-        <g stroke="{COLORS['magenta']}" stroke-width="1" fill="none" opacity="0.6">
-            <path d="M-200,0 Q-150,30 -100,0 T0,0 T100,0 T200,0 T300,0 T400,0 T500,0 T600,0 T700,0 T800,0 T900,0 T1000,0">
-                <animateTransform attributeName="transform" type="translate" from="0,0" to="200,0" dur="6s" repeatCount="indefinite" />
-            </path>
-        </g>
-        <!-- 扫频扫描线 -->
-        <line x1="200" y1="-60" x2="200" y2="60" stroke="#FFFFFF" stroke-width="1" opacity="0.5">
-            <animate attributeName="x1" values="50; 800; 50" dur="8s" repeatCount="indefinite"/>
-            <animate attributeName="x2" values="50; 800; 50" dur="8s" repeatCount="indefinite"/>
-        </line>
+        
+        <!-- 核心计算内核 (品红色转子) -->
+        <path d="M 0,-30 L 26,15 L -26,15 Z" fill="none" stroke="{COLORS['magenta']}" stroke-width="2" filter="url(#glow-magenta)">
+             <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="4s" repeatCount="indefinite"/>
+        </path>
+        <circle cx="0" cy="0" r="5" fill="{COLORS['yellow']}" filter="url(#glow-cyan)">
+            <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite"/>
+        </circle>
     </g>
     """
 
-    # 高级动效：右下角三维轨道陀螺仪 (Orbital Gyroscope)
-    gyro = f"""
-    <g transform="translate({WIDTH - 200}, 420)">
-        <text x="0" y="-85" fill="{COLORS['dim']}" font-size="10" font-weight="bold" text-anchor="middle">TARGET_LOCK</text>
-        <!-- 外层刻度慢速顺时针 -->
-        <circle cx="0" cy="0" r="70" fill="none" stroke="{COLORS['stroke']}" stroke-width="6" stroke-dasharray="2 8">
-            <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="40s" repeatCount="indefinite"/>
-        </circle>
-        <!-- 中层瞄准环快速逆时针 -->
-        <circle cx="0" cy="0" r="55" fill="none" stroke="{COLORS['cyan']}" stroke-width="2" stroke-dasharray="10 20 40 10 5 15" filter="url(#glow-cyan)">
-            <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="12s" repeatCount="indefinite"/>
-        </circle>
-        <!-- 内层能量环脉冲 -->
-        <circle cx="0" cy="0" r="40" fill="none" stroke="{COLORS['magenta']}" stroke-width="1.5" stroke-dasharray="40 80" filter="url(#glow-magenta)">
-            <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="8s" repeatCount="indefinite"/>
-        </circle>
-        <!-- 核心十字准心 -->
-        <path d="M -15,0 L 15,0 M 0,-15 L 0,15" fill="none" stroke="{COLORS['yellow']}" stroke-width="1"/>
-        <circle cx="0" cy="0" r="3" fill="{COLORS['yellow']}" filter="url(#glow-cyan)">
-             <animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite"/>
-        </circle>
-    </g>
-    """
+    # 左右两侧的微型频谱仪 (Spectrum Visualizer)
+    def make_spectrum(x, y, is_left):
+        bars = ""
+        for i in range(16):
+            height = 10 + (i * 7 % 30) if is_left else 10 + ((15-i) * 11 % 30)
+            bars += f"""
+            <rect x="{i*12}" y="{-height}" width="6" height="{height}" fill="{COLORS['dim']}">
+                <animate attributeName="height" values="{height}; {height*0.2}; {height}" dur="{0.5 + (i%3)*0.2}s" repeatCount="indefinite"/>
+                <animate attributeName="y" values="{-height}; {-height*0.2}; {-height}" dur="{0.5 + (i%3)*0.2}s" repeatCount="indefinite"/>
+            </rect>
+            """
+        title = "SYS.MEM" if is_left else "NET.TX/RX"
+        return f'<g transform="translate({x}, {y})"><text x="0" y="20" fill="{COLORS["dim"]}" font-size="9" letter-spacing="1">{title}</text>{bars}</g>'
+
+    waveforms = core + make_spectrum(100, 460, True) + make_spectrum(WIDTH - 300, 460, False)
     
-    return svg_base(h, top_bar + glitch_text + typewriter + waveforms + gyro, "01")
+    return svg_base(h, top_bar + glitch_text + typewriter + waveforms, "01")
 
 # --- 区块 03: WHOAMI ---
 def render_whoami(data):
@@ -373,113 +393,134 @@ def render_telemetry(data):
 
 # --- 区块 04: TOOLCHAIN ---
 def render_toolchain(data):
-    h = 240
-    
+    h = 340
+
     # 工业图纸风格底纹 (十字对齐线 + 极小字号工程批号)
     bg = f"""
     <path d="M 24,20 L 34,20 M 24,20 L 24,30 M {WIDTH-24},20 L {WIDTH-34},20 M {WIDTH-24},20 L {WIDTH-24},30" fill="none" stroke="{COLORS['dim']}" stroke-width="1"/>
-    <text x="64" y="32" fill="{COLORS['dim']}" font-size="12" font-weight="bold" letter-spacing="2">SYS.ARCH // HARDWARE &amp; FIRMWARE TOPOLOGY</text>
-    <text x="{WIDTH-32}" y="40" fill="{COLORS['dim']}" font-size="8" text-anchor="end">REV. 2.6.1_PROD</text>
+    <text x="64" y="32" fill="{COLORS['dim']}" font-size="10" font-weight="bold" letter-spacing="2">SYS.ARCH // ORTHOGONAL PCB ROUTING</text>
+    <text x="{WIDTH-32}" y="40" fill="{COLORS['dim']}" font-size="8" text-anchor="end">JASMINE_SOC_REV_2.6</text>
     <line x1="24" y1="44" x2="{WIDTH-24}" y2="44" stroke="{COLORS['stroke']}" stroke-width="1" stroke-dasharray="4 2"/>
     """
-    
-    # 渲染右上角的装饰性条形码
-    barcode = ""
-    for i in [0, 4, 6, 12, 16, 20, 24, 30, 32, 38]:
-        barcode += f'<line x1="{WIDTH - 120 + i}" y1="18" x2="{WIDTH - 120 + i}" y2="34" stroke="{COLORS["dim"]}" stroke-width="{1 if i%3==0 else 2}"/>'
 
-    # 非对称工业内存块生成器
+    # 正交 45 度 PCB 走线
+    bus_lines = f"""
+    <!-- 连向 MCU (Cyan) -->
+    <path d="M 600,160 L 600,120 L 570,90 L 300,90" fill="none" stroke="{COLORS['cyan']}" stroke-width="2" stroke-dasharray="4 4">
+        <animate attributeName="stroke-dashoffset" from="16" to="0" dur="1s" repeatCount="indefinite"/>
+    </path>
+    <!-- 连向 PERIPHERALS (Yellow) -->
+    <path d="M 600,160 L 570,190 L 300,190" fill="none" stroke="{COLORS['yellow']}" stroke-width="2"/>
+    <!-- 连向 MOTION (Yellow) -->
+    <path d="M 600,160 L 600,270 L 580,290 L 300,290" fill="none" stroke="{COLORS['yellow']}" stroke-width="2"/>
+    <!-- 连向 AI_VISION (Magenta) -->
+    <path d="M 600,160 L 652.5,107.5 L 900,107.5" fill="none" stroke="{COLORS['magenta']}" stroke-width="2"/>
+    <!-- 连向 WEB (Green) -->
+    <path d="M 600,160 L 672.5,232.5 L 900,232.5" fill="none" stroke="{COLORS['green']}" stroke-width="2"/>
+    """
+
+    # 中央主控 IC 芯片图示
+    pins = ""
+    for i in range(10):
+        pins += f'<line x1="{575+i*5}" y1="135" x2="{575+i*5}" y2="140" stroke="{COLORS["dim"]}" stroke-width="1.5"/>'
+        pins += f'<line x1="{575+i*5}" y1="180" x2="{575+i*5}" y2="185" stroke="{COLORS["dim"]}" stroke-width="1.5"/>'
+        pins += f'<line x1="565" y1="{145+i*3.5}" x2="570" y2="{145+i*3.5}" stroke="{COLORS["dim"]}" stroke-width="1.5"/>'
+        pins += f'<line x1="630" y1="{145+i*3.5}" x2="635" y2="{145+i*3.5}" stroke="{COLORS["dim"]}" stroke-width="1.5"/>'
+
+    central_chip = f"""
+    <g>
+        {pins}
+        <rect x="570" y="140" width="60" height="40" fill="{COLORS['bg']}" stroke="{COLORS['cyan']}" stroke-width="2"/>
+        <circle cx="578" cy="148" r="2" fill="{COLORS['yellow']}"/>
+        <text x="600" y="158" fill="{COLORS['cyan']}" font-size="8" font-weight="bold" text-anchor="middle">JASMINE</text>
+        <text x="600" y="170" fill="{COLORS['dim']}" font-size="7" font-weight="bold" text-anchor="middle">SOC V2.6</text>
+    </g>
+    """
+
+    # 工业内存块生成器
     def make_block(x, y, w, h, label, sub_labels, color, hex_addr):
-        subs = ""
-        for idx, sub in enumerate(sub_labels):
-            subs += f'<text x="{x+10}" y="{y+42+(idx*16)}" fill="{COLORS["dim"]}" font-size="12">- {sub}</text>'
-            
+        subs = "".join([
+            f'<text x="{x+10}" y="{y+42+(idx*16)}" fill="{COLORS["dim"]}" font-size="11">- {sub}</text>'
+            for idx, sub in enumerate(sub_labels)
+        ])
+
         return f"""
         <g>
-            <!-- 实体方块与背景 -->
             <rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{COLORS['panel']}" stroke="{color}" stroke-width="1"/>
             <rect x="{x}" y="{y}" width="{w}" height="22" fill="{color}" fill-opacity="0.15"/>
-            <!-- 标题与十六进制地址 -->
             <text x="{x+10}" y="{y+15}" fill="{color}" font-size="12" font-weight="bold">{label}</text>
-            <text x="{x+w-10}" y="{y+15}" fill="{color}" font-size="12" font-family="'JetBrains Mono', Consolas" text-anchor="end">{hex_addr}</text>
-            <!-- 接口焊点节点 -->
-            <circle cx="{x+w}" cy="{y+h/2}" r="3" fill="{COLORS['bg']}" stroke="{color}" stroke-width="1.5"/>
+            <text x="{x+w-10}" y="{y+15}" fill="{color}" font-size="10" font-family="'JetBrains Mono', Consolas" text-anchor="end">{hex_addr}</text>
+            <circle cx="{x+w if x < 600 else x}" cy="{y+h/2}" r="3" fill="{COLORS['bg']}" stroke="{color}" stroke-width="1.5"/>
             {subs}
-            <!-- 底部高亮装饰线 -->
             <line x1="{x+10}" y1="{y+h-10}" x2="{x+w-10}" y2="{y+h-10}" stroke="{color}" stroke-opacity="0.4" stroke-width="2"/>
         </g>
         """
 
-    # 绘制数据总线走线 (直角拐角，模拟 PCB 走线)
-    bus_lines = f"""
-    <path d="M 280,125 L 320,125" fill="none" stroke="{COLORS['cyan']}" stroke-width="2" stroke-dasharray="4 2"/>
-    <path d="M 520,95 L 560,95" fill="none" stroke="{COLORS['yellow']}" stroke-width="2"/>
-    <path d="M 520,175 L 540,175 L 540,155 L 560,155" fill="none" stroke="{COLORS['yellow']}" stroke-width="2"/>
-    <path d="M 760,140 L 800,140" fill="none" stroke="{COLORS['magenta']}" stroke-width="2"/>
-    <path d="M 1000,140 L 1040,140" fill="none" stroke="{COLORS['green']}" stroke-width="2"/>
-    """
-
-    # 基于真实开发栈构建拓扑矩阵，避免假大空的名词
     blocks = [
-        make_block(80, 70, 200, 110, "MCU_CORE", ["STM32F103C8T6", "ESP32-S3", "FreeRTOS / ESP-IDF"], COLORS['cyan'], "0x0800"),
-        make_block(320, 60, 200, 70, "PERIPHERALS", ["I2C / SPI / UART", "RS485 / PWM"], COLORS['yellow'], "0x4000"),
-        make_block(320, 140, 200, 70, "MOTION_CTRL", ["ROS2 Humble", "Nav2 / SLAM"], COLORS['yellow'], "0x4002"),
-        make_block(560, 70, 200, 140, "AI_VISION", ["YOLOv8 / YOLOv11", "Qwen2.5-VL / Ollama", "OpenCV / ONNX", "Intel RealSense D435"], COLORS['magenta'], "0x6000"),
-        make_block(800, 70, 200, 140, "WEB_PORTAL", ["Vue 3 + Element Plus", "Django REST Framework", "Next.js / Tailwind", "Three.js / WebGL"], COLORS['green'], "0x8000")
+        make_block(80, 55, 220, 70, "MCU_CORE", ["STM32 / ESP32 / FreeRTOS"], COLORS['cyan'], "0x0800"),
+        make_block(80, 155, 220, 70, "PERIPHERALS", ["I2C/SPI / UART / RS485 / PWM"], COLORS['yellow'], "0x4000"),
+        make_block(80, 255, 220, 70, "MOTION_CTRL", ["ROS2 Humble / Nav2 / SLAM"], COLORS['yellow'], "0x4002"),
+        make_block(900, 55, 220, 105, "AI_VISION", ["YOLOv8 / YOLOv11", "Qwen2.5-VL / Ollama", "OpenCV / RealSense D435"], COLORS['magenta'], "0x6000"),
+        make_block(900, 180, 220, 105, "WEB_PORTAL", ["Vue3 + Element Plus", "Django REST Framework", "Next.js / 3D Canvas"], COLORS['green'], "0x8000")
     ]
 
-    return svg_base(h, bg + barcode + bus_lines + "".join(blocks), "04")
+    return svg_base(h, bg + bus_lines + central_chip + "".join(blocks), "04")
 
 # --- 区块 05: BUILDS ---
 def render_builds(data):
     h = 240
-    content = ""
-    
-    title = f"<text x=\"64\" y=\"30\" fill=\"{COLORS['dim']}\" font-size=\"12\" font-weight=\"bold\" letter-spacing=\"2\">ACCESSING_RECORDS // BUILDS</text>"
-    content += title
+    content = f'<text x="64" y="30" fill="{COLORS["dim"]}" font-size="12" font-weight="bold" letter-spacing="2">ACCESSING_RECORDS // BUILDS</text>'
 
     def make_card(x, y, build):
         w = 360
-        card_h = 150
+        card_h = 160
+
+        # 全息激光扫描线动效 (Holo-Scanner)
+        scanner = f"""
+        <g opacity="0.7">
+            <rect x="0" y="0" width="{w}" height="40" fill="{COLORS['cyan']}" fill-opacity="0.12" filter="url(#glow-cyan)">
+                <animate attributeName="y" values="0; {card_h-40}; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+            </rect>
+            <line x1="0" y1="0" x2="{w}" y2="0" stroke="{COLORS['cyan']}" stroke-width="2" filter="url(#glow-cyan)">
+                <animate attributeName="y1" values="0; {card_h}; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+                <animate attributeName="y2" values="0; {card_h}; 0" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+            </line>
+        </g>
+        """
+
         return f"""
         <g transform="translate({x}, {y})">
-            <!-- 卡片底板 -->
             <rect x="0" y="0" width="{w}" height="{card_h}" fill="{COLORS['panel']}" stroke="{COLORS['stroke']}" stroke-width="1"/>
-            
-            <!-- 瞄准器边角 (HUD) -->
+
             <path d="M -5,-5 L 10,-5 M -5,-5 L -5,10" fill="none" stroke="{COLORS['cyan']}" stroke-width="2"/>
             <path d="M {w+5},-5 L {w-10},-5 M {w+5},-5 L {w+5},10" fill="none" stroke="{COLORS['cyan']}" stroke-width="2"/>
             <path d="M -5,{card_h+5} L 10,{card_h+5} M -5,{card_h+5} L -5,{card_h-10}" fill="none" stroke="{COLORS['cyan']}" stroke-width="2"/>
             <path d="M {w+5},{card_h+5} L {w-10},{card_h+5} M {w+5},{card_h+5} L {w+5},{card_h-10}" fill="none" stroke="{COLORS['cyan']}" stroke-width="2"/>
 
-            <!-- 顶部装饰带 -->
+            <clipPath id="clip-{build['id']}">
+                <rect x="0" y="0" width="{w}" height="{card_h}" />
+            </clipPath>
+            <g clip-path="url(#clip-{build['id']})">
+                {scanner}
+            </g>
+
             <rect x="0" y="0" width="{w}" height="4" fill="{COLORS['purple']}"/>
-            
-            <!-- 编号与语言标签 -->
-            <text x="16" y="30" fill="{COLORS['yellow']}" font-size="18" font-family="'JetBrains Mono', Consolas" font-weight="700">[{build['id']}]</text>
-            <text x="60" y="28" fill="{COLORS['dim']}" font-size="12" font-weight="bold">{build['lang'].upper()}</text>
-            
-            <!-- 呼吸状态点 -->
+            <text x="16" y="35" fill="{COLORS['yellow']}" font-size="20" font-family="'JetBrains Mono', Consolas" font-weight="900">[{build['id']}]</text>
+            <text x="70" y="32" fill="{COLORS['dim']}" font-size="10" font-weight="bold">{build['lang'].upper()}</text>
             <circle cx="{w-20}" cy="24" r="4" fill="{COLORS['green']}">
-                <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="1;0.2;1" dur="{2 + int(build['id'])*0.5}s" repeatCount="indefinite"/>
             </circle>
 
-            <!-- 项目代号 -->
-            <text x="16" y="65" fill="#FFFFFF" font-size="20" font-weight="700" letter-spacing="1">{build['codename']}</text>
-            
-            <!-- 中文描述 (分两行) -->
-            <text x="16" y="95" fill="{COLORS['cyan']}" font-size="14">{build['desc'][0]}</text>
-            <text x="16" y="115" fill="{COLORS['cyan']}" font-size="14">{build['desc'][1]}</text>
-            
-            <!-- 底部装饰线索 -->
-            <line x1="16" y1="135" x2="{w-16}" y2="135" stroke="{COLORS['stroke']}" stroke-width="1" stroke-dasharray="2 2"/>
+            <text x="16" y="75" fill="#FFFFFF" font-size="22" font-weight="900" letter-spacing="1">{build['codename']}</text>
+            <text x="16" y="105" fill="{COLORS['cyan']}" font-size="13">{build['desc'][0]}</text>
+            <text x="16" y="130" fill="{COLORS['cyan']}" font-size="13">{build['desc'][1]}</text>
+            <line x1="16" y1="145" x2="{w-16}" y2="145" stroke="{COLORS['stroke']}" stroke-width="1" stroke-dasharray="2 2"/>
         </g>
         """
 
-    # 横向排列三个卡片
-    start_x = (WIDTH - (360 * 3 + 40 * 2)) / 2 # 居中计算
+    start_x = (WIDTH - (360 * 3 + 40 * 2)) / 2
     for i, build in enumerate(data['builds']):
-        content += make_card(start_x + i * 400, 70, build)
+        content += make_card(start_x + i * 400, 50, build)
         
     return svg_base(h, content, "05")
 
